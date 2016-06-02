@@ -1,0 +1,16 @@
+<ion-view view-title="Store" name="store-view">
+  <ion-content scroll="true">
+
+	<div class="list">
+	    <a class="item item-thumbnail-left" href="#" ng-repeat="product in products">
+	      <img src="{{ product.image }}" style="display: inline-block">
+	      <h2>{{ product.title }} <small>${{ product.price }}</small></h2>
+	      <p>{{ product.description }}</p>
+
+	    </a>
+
+	</div>
+
+
+  </ion-content>
+</ion-view>

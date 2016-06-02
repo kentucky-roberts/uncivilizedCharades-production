@@ -1,0 +1,60 @@
+//   Global Theme Variables - Ionic
+// --------------------------------------------------
+////
+//////
+////////
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc000 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #121212 !default;
+$calm:                            #11c1f3 !default;
+$fb-blue:                       	#3b5998 !default;
+$google-red:                   	#d34836 !default;
+
+
+//
+//   Set Custom Brand
+// --------------------------------------------------
+//
+$brand-primary:						$energized;
+$brand-yellow:							#fc0 !default;
+$brand-yellow-bright:                                   #fce21e !default;
+$brand-blue:							#84bcde !default;
+$brand-red:							#fb292d !default;
+$brand-secondary:						#fc0 !default;
+$brand-color-link:						$brand-primary;
+$brand-bg:								#333 !default;
+$brand-color:							#c7c7c7 !default;
+
+$font-family-helvetica:                                  'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif !default;
+$brand-font-family-base:				'Open Sans', sans-serif !default;
+$brand-font-family-hand-writing:		'Shadows Into Light Two', cursive !default;
+$brand-color-gray:						#444444 !default;
+$brand-gray:							$brand-color-gray;
+$brand-light-gray:						#bfbfbf !default;
+$brand-color-dark:						#121212 !default;
+$brand-color-light:						#ffffff !default;
+$brand-color-nav:						#bfbfbf;
+$brand-code:							#dadbb1;
+$brand-code-font-family-base:		menlo, monaco, 'andale mono', 'courier new', fixed !default;
+$brand-color-success:					$energized;
+$brand-color-error:					$assertive;
+
+$brand-team1-color:			$brand-red;
+$brand-team2-color:			$brand-blue;
+
+$brand-bg-dark:				$brand-bg;
+
+//
+//   Get and Add Custom Brand
+// --------------------------------------------------
+//
+$brand-link-color:		$brand-primary;
+$brand-link-color-hover:	#ffffff !default;
+
+
+

@@ -1,0 +1,83 @@
+
+  <ion-content class="{{teamCss}}">
+  <div class="game__slide  {{teamCss}} slide-right-to-left" ng-if="gameSlideActive">
+
+            <!-- Active Player Info -->
+            <div class="testimonial item" ng-if="gameWithPlayers">
+                <div class="author">
+                    <div class="testimonial-image "><img src="img/player-images/avatar.jpg"></div>
+                    <div class="testimonial-author-info">
+                        <span class="name">{{game.activePlayer.name || "Add Players"}}</span>
+                        <br>
+                        <span class="team">{{game.activePlayer.team}}</span>
+                        <span>game.players.index.team {{game.players[$index].team }}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Active Team Info if no Players -->
+            <div class="item" ng-if="!gameWithPlayers">
+                <h2>Active Team</h2>
+                <h1>{{game.activeTeam.name}}</h1>
+            </div>
+
+            <div class="{{(game.canDeal === true) ? 'show' : 'hidden'}} ">
+              <td-cards>
+                <td-card class="card card-0  {{(game.cardsVisible === false) ? 'card-back' : 'card-face' }} "></td-card>
+                <td-card class="card card-1  {{(game.cardsVisible === false) ? 'card-back' : 'card-face' }} "></td-card>
+                <td-card class="card card-2  {{(game.cardsVisible === false) ? 'card-back' : 'card-face' }} "></td-card>
+              </td-cards>
+            </div>
+
+
+    <button class="hidden button button-large" ng-click="nextStep();">Next Step</button>
+    <button class="hidden button button-large" ng-click="addPointToActiveTeam();">Add Point</button>
+    <button class="hidden button button-large" ng-click="endGame();">End Game</button>
+
+
+
+              <div class="fixed__outside--bottom">
+                    <div class="row">
+                       <div class="col">
+                          <div id="team1__score" class="text--center text--yellow  {{(game.activeTeam == game.teams[0] ) ? 'text--yellow' : 'text--white'}}">
+                          Team1:
+                          <strong>{{team1Score}}</strong>
+                          </div>
+                        </div>
+                      <div class="col">
+                        <div id="team2__score" class="text--center">
+                          Team2:
+                           <strong>{{team2Score}}</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                       <div class="col">
+                          <div id="dealer" class="show">
+                              <h3 class="instruction-test">Push button to deal cards</h3>
+                              <button class="deal-cards button button-energized button-large" ng-click="game.deal()">Deal Cards</button>
+                          </div>
+                          <div id="showCards" class="hidden">
+                              <h3 class="instruction-test">Push button to show cards</h3>
+                              <button class="button button-energized button-large" ng-click="game.showCards()">Show Cards</button>
+                          </div>
+                          <div id="activateCard" class="hidden">
+                              <h3 class="instruction-test">Choose one of the three phrases above to act out</h3>
+                              <button class="button button-energized button-large button-outline" ng-click="game.activateCard()">Activate Card</button>
+                          </div>
+                          <div id="showCountdown" class="hidden">
+                              <h3 class="instruction-test">You'll have 120 secons to act out the phrase. Click button when ready.</h3>
+                              <button class="button button-energized button-large button-outline" ng-click="game.showCountdown()">Start Countdown</button>
+                          </div>
+                          <div id="countdown" class="hidden">
+                              <h3 class="instruction-test">This should be a pop-up modal</h3>
+                          </div>
+                          <div id="readyNextTurn" class="hidden">
+                              <h3 class="instruction-test">Swipe the page left to start the next turn!</h3>
+                          </div>
+                       </div>
+                    </div>
+              </div><!--fixed-outside-bottom -->
+
+
+  </ion-pane>
+  </ion-content>

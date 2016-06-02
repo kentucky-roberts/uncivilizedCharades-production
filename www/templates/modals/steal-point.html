@@ -1,0 +1,33 @@
+    <div class="modal">
+    <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-dark">
+            <h1 class="title">Steal Point</h1>
+        </ion-header-bar>
+        <ion-content class="padding brand-bg">
+
+            <h1 class="text--start">One Change to Guess the<br> Other Team's Phrase</h1>
+
+            <p class="lead text--center">Click the button below after you've officially gussed to see the secret phrase</p>
+
+
+                    <button class="button button-energized button-large  center--block" ng-click="showActiveCardFace(); addPointToActiveTeam();closeModal();nextStep();nextHand();">Ready to guess, show us the secret phrase!</button>
+
+
+
+            <div class="cards-on-bottom">
+                <div class="card  {{ (activeCardFaceVisible == true) ? 'card-face' : 'card-back' }}">
+                      {{activeCard.phrase}}  {{cards.activeCard}}
+                </div>
+            </div>
+
+
+
+            <div ng-if="activeCardFaceVisible">
+                    <button class="button button  button-dark button-outline " ng-click="guessedCorrect();addPointToActiveTeam();closeModal();nextStep();nextHand();">Guessed Correct</button>
+                    <button class="button button  button-dark button-outline " ng-click="guessedWrong();addPointToActiveTeam();closeModal();nextStep();nextHand();">Guessed Wrongt</button>
+            </div>
+
+
+        </ion-content>
+    </ion-modal-view>
+</div>

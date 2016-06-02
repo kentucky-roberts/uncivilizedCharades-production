@@ -1,0 +1,32 @@
+<ion-view view-title="" name="game-view">
+
+    <ion-pane  id="game__welcome" class="my-slide-animation" ng-if="game.welcome && !game.preflight && !game.started && !game.over">
+              <div ng-include="'templates/game/game.welcome.html'"></div>
+    </ion-pane>
+
+
+      <ion-pane  id="game__preflight" class="my-slide-animation" ng-if="!game.welcome && game.preflight && !game.started && !game.over">
+              <div ng-include="'templates/game/game.preflight.html'"></div>
+      </ion-pane>
+
+      <ion-pane  id="game__quickStart" class="my-slide-animation" ng-if="!game.welcome && game.quickStart && !game.preflight && !game.started && !game.game-over">
+            <!--   <h1>Game</h1> -->
+              <div ng-include="'templates/game/game.quick-start.html'"></div>
+      </ion-pane>
+
+      <ion-pane  id="game" class="my-slide-animation" ng-if="!game.welcome && !game.preflight && game.started && !game.game-over">
+            <!--   <h1>Game</h1> -->
+              <div ng-include="'templates/game/game.html'"></div>
+      </ion-pane>
+
+
+      <ion-pane  id="game__over" class="my-slide-animation" ng-if="!game.welcome && !game.preflight && game.started && game.game-over">
+              <h1>Game Over</h1>
+              <div ng-include="'templates/game/game-over.html'"></div>
+      </ion-pane>
+
+
+
+
+
+</ion-view>
