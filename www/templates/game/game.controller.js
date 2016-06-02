@@ -267,6 +267,10 @@ function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $wind
           $scope.selectActiveTeam();
       };
 
+
+
+
+
       $scope.endGame = function() {
           $scope.gameOver = true;
           game.over = true;

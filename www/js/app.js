@@ -6,8 +6,7 @@ angular
         'app.directive',
         'app.service',
         'app.game',
-        'app.filter',
-
+        'app.filter'
       ])
 
       .run(function($ionicPlatform, $rootScope, $firebaseAuth, $firebase, $window, $ionicLoading) {
