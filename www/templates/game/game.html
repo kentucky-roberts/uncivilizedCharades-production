@@ -3,11 +3,11 @@
   <div class="game__slide  {{teamCss}} slide-right-to-left" ng-if="gameSlideActive">
 
 
-    <div class="{{(game.canDeal === true || game.game.cardsDealt === true ) ? 'show' : 'hidden'}} ">
+    <div class="{{(game.canDeal === true || game.cardsDealt === true ) ? 'show' : 'hidden'}} ">
       <td-cards>
-        <td-card class="card card-0  {{(game.cardsVisible === false) ? 'card-back' : 'card-face' }} "></td-card>
-        <td-card class="card card-1  {{(game.cardsVisible === false) ? 'card-back' : 'card-face' }} "></td-card>
-        <td-card class="card card-2  {{(game.cardsVisible === false) ? 'card-back' : 'card-face' }} "></td-card>
+        <td-card class="card card-0  {{(game.cardFaceVisible === true) ? 'card-face' : 'card-back' }} "></td-card>
+        <td-card class="card card-1  {{(game.cardFaceVisible === true) ? 'card-face' : 'card-back'  }} "></td-card>
+        <td-card class="card card-2  {{(game.cardFaceVisible === true) ? 'card-face' : 'card-back'  }} "></td-card>
       </td-cards>
     </div>
 

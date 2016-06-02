@@ -515,7 +515,7 @@ function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $wind
             game.canDeal = false;
             game.showResults = false;
             game.dealerVisible = true;
-            came.cardsDealt = false;
+            game.cardsDealt = false;
             game.cardsVisible = false;
             $("#dealer").removeClass("hidden").addClass("show");
       };
@@ -550,6 +550,7 @@ function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $wind
           game.cardsVisible = false;
           game.canDeal = false;
           game.cardsDealt = false;
+          game.cardFaceVisible = false;
           $("#activateCard").removeClass("show").addClass("hidden");
           $("#showCountdown").removeClass("hidden").addClass("show");
          game.showCountdown();
