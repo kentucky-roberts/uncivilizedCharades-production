@@ -18,7 +18,7 @@ angular
         'angular-logger'
     ])
 
-    .constant('version', '1.0.0')
+    .constant('version', '1.0.0');
     // .constant('$ionicLoadingConfig', {
     //   template: '<ion-spinner class="spinner" icon="ios"></ion-spinner>'
     // });

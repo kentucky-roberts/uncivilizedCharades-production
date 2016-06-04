@@ -3,26 +3,40 @@ angular
   .module('app')
     .factory('CardService', CardService);
 
-//GameService.$inject = ['$timeout', 'CardService'];
+CardService.$inject = ['$timeout', '$http'];
+function CardService($timeout, $http){
 
-function CardService(){
     var service = {
         newDeck: newDeck,
         Deck: Deck,
         Card: Card
     };
 
-    function newDeck(){
-        var deck = new Deck();
+    function newDeck(card_types){
+        var deck = new Deck(card_types);
         return deck;
     }
 
-    function Deck(phrases, alt_phrases){
+
+
+    // var card_types = $http.get('api/card_types.json').then(function (cardData) {
+    //       var newCards = cardData.data;
+    //       var newTotalCards = newCards.length;
+    //     });
+
+
+    // var phrases = ["Run fast", "Eat snails", "Talk to turtles", "Scuba dive"];
+    // var alt_phrases = ["Eat Pizza", "Find Waldo", "Carpet cleaning", "Do jumpingjacks" ];
+
+
+    function Deck(card_types) {
       var deck = this;
       this.cards = [];
       this.dealt = [];
-      this.phrases = phrases;
-      this.alt_phrases = alt_phrases;
+      this.card_types = card_types;
+      this.phrases = ["Run fast", "Eat snails", "Talk to turtles", "Scuba dive"];
+      this.alt_phrases = ["Eat Pizza", "Find Waldo", "Carpet cleaning", "Do jumpingjacks" ];
+      console.log("card_types" + card_types);
 
       deck.phrases.forEach(function (phrase) {
         deck.alt_phrases.forEach(function(alt_phrase){
@@ -35,9 +49,13 @@ function CardService(){
 
     }
 
-    Deck.prototype.suits = ['C', 'D', 'S', 'H'];
+    Deck.prototype.phrases = function(phrases) {
+      this.phrases = phrases;
+    };
 
-    Deck.prototype.ranks = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+     Deck.prototype.alt_phrases = function(alt_phrases) {
+      this.alt_phrases = alt_phrases;
+    };
 
     Deck.prototype.deal = function(){
         var card = this.cards.shift();
@@ -48,7 +66,6 @@ function CardService(){
         else {
             return false;
         }
-
     };
 
     Deck.prototype.shuffle = function(cards){
@@ -78,13 +95,13 @@ function CardService(){
     };
 
 
-    function Card(rank, suit){
-        this.rank = rank;
-        this.suit = suit;
+    function Card (phrase, alt_phrase){
+        this.phrase = phrase;
+        this.alt_phrase = alt_phrase;
     }
 
     Card.prototype.name = function () {
-        return this.rank + ' ' + this.suit;
+        return this.phrase + ' ' + this.alt_phrase;
     };
 
     return service;
@@ -92,3 +109,11 @@ function CardService(){
     ////////////////
 
 }
+
+// game.deck.cards;
+// game.deck.dealt;
+
+// game.deck.card.name();
+// game.deck.shuffle(cards);
+// game.deck.deal();
+// game.deck.reset();

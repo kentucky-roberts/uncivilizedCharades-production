@@ -2,15 +2,9 @@ angular
   .module('app.game')
     .controller('GameController', GameController);
 
-GameController.$inject = ['$ionicPlatform', '$scope', '$rootScope', '$firebaseAuth', '$window', '$interval', '$timeout', '$ionicModal', '$ionicLoading', '$ionicSideMenuDelegate', '$state', '$ionicSlideBoxDelegate', '$http', '$ionicTabsDelegate', '$firebaseObject', 'ngAudio', 'ionicToast', '$ionicNavBarDelegate', 'PlayerService', 'CardService', 'ModalService', 'CountdownService', 'DealerService', 'TeamService', 'AppService', 'GameService', 'Games', '$log', 'CardType'];
+GameController.$inject = ['$ionicPlatform', '$scope', '$rootScope', '$firebaseAuth', '$window', '$interval', '$timeout', '$ionicModal', '$ionicLoading', '$ionicSideMenuDelegate', '$state', '$ionicSlideBoxDelegate', '$http', '$ionicTabsDelegate', '$firebaseObject', 'ngAudio', 'ionicToast', '$ionicNavBarDelegate', 'PlayerService', 'CardService', 'ModalService', 'CountdownService', 'DealerService', 'TeamService', 'AppService', 'GameService', 'Games', '$log', 'CardType', 'TeamService', 'TeamsService'];
 
-function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $window, $interval, $timeout, $ionicModal, $ionicLoading, $ionicSideMenuDelegate, $state, $ionicSlideBoxDelegate, $http, $ionicTabsDelegate, $firebaseObject, ngAudio, ionicToast, $ionicNavBarDelegate, PlayerService, CardService, ModalService, CountdownService, DealerService, TeamService, AppService, GameService, Games, $log, CardType) {
-
-  $scope.showLoading = function() {
-    $ionicLoading.show();
-  };
-
-  $scope.showLoading();
+function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $window, $interval, $timeout, $ionicModal, $ionicLoading, $ionicSideMenuDelegate, $state, $ionicSlideBoxDelegate, $http, $ionicTabsDelegate, $firebaseObject, ngAudio, ionicToast, $ionicNavBarDelegate, PlayerService, CardService, ModalService, CountdownService, DealerService, TeamService, AppService, GameService, Games, $log, CardType, TeamService, TeamsService) {
 
   $scope.hideNavBar = function() {
       document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
@@ -22,6 +16,11 @@ function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $wind
 
   $scope.hideTabBar();
 
+  $scope.showLoading = function() {
+    $ionicLoading.show();
+  };
+
+  $scope.showLoading();
 
 
 
@@ -61,236 +60,153 @@ function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $wind
 
 
 
-    var cards =
-        $http.get('api/card_types.json').then(function (cardData) {
-          game.cards = cardData.data;
-          game.totalCards = game.cards.length;
+    var card_types = $http.get('api/card_types.json').then(function (cardData) {
+          var newCards = cardData.data;
+          var newTotalCards = newCards.length;
         });
-        console.log("cardsss!!!!" + cards);
+
+    console.log(card_types);
 
 
 
-      game.init = function () {
+    game.init = function (card_types) {
+      console.log("game.init was called" + card_types.length);
 
-            game.maxScore = GameService.maxScore();
-            game.secondsRemaining = GameService.maxTime();
+      game.card_types = card_types;
+      game.maxScore = GameService.maxScore();
+      game.secondsRemaining = GameService.maxTime();
 
-            //game.deck = CardService.newDeck();  //new
-            game.dealer = DealerService.newDealer(game.deck);  //new
-            console.log("game.dealer", game.dealer);
-            game.playerCards = [];  //new
-            game.players = [];
-            game.teams = [];
-
-            game.activeTeam = "Team1";
-            game.nextActiveTeam = "Team2";
-            game.activeTeamColor = "yellow-text";
-            game.winningTeamName = "FreeAgent";
+      game.deck = CardService.newDeck(card_types);  // create a deck of cards and pass it into the game
 
 
-            game.canDeal = false;
-            game.cardsVisible = false;
+      console.log(game.deck);
 
-            $scope.gamePreflight= false;
-            $scope.gameStarted = false;
-            $scope.gameOver = false;
-
-            $scope.gameSlideActive  = true;
-            $scope.gameHasPlayers = false;
-
-            game.welcome = true;
-            game.quickStart = false;  // KEY TO THE APP START OPTIONS
-            game.preflight  = false;
-            game.started  = false;
-            game.over  = false;
+      game.dealer = DealerService.newDealer(game.deck);  //  now create a dealer pass him to game and give the dealer out new game deck of cards
 
 
-            $scope.slides = [];
-            game.team1Score = 0;  // remove
-            game.team2Score = 0;  // remove
+      console.log(game.dealer.deck.cards[0]);
 
-            // game.teams[0].points = 0;
-            // game.teams[1].points = 0;
 
-            $scope.team1Score = 0;  // remove
-            $scope.team2Score = 0; // remove
-      };
 
+      game.team1 = TeamService.newTeam("Team1", 0);  // make a team
+      game.team2 = TeamService.newTeam("Team2", 0);  // make another team
+      game.teams = TeamsService.newTeams(game.team1, game.team2);  //  push teams into game to make game.teams
+      //game.teams.team1.addPoint();
+      //console.log("game.teams " , game.teams.team1.score);
+      /**
+       * Game stuff inherited from Team object
+       *
+       * Attributes (we can view this info about them via {{game.teams.team1.score}} )
+       * game.teams.team1.score
+       * game.teams.team1.teamName
+       * game.teams.team1.originalScore
+       *
+       * Methods
+       * game.teams.team1.logInfo();
+       * game.teams.team1.addPoint();
+       * game.teams.team1.removePoint();
+       * game.teams.team1.resetScore();
+       * game.teams.team1.changeScore(anountToChange);
+       *
+       */
+      console.log("... created game.teams" + game.teams.team1.teamName + game.teams.team2.teamName);
+
+
+      $scope.slides = [];
+
+
+      game.canDeal = false;
+      game.cardsVisible = false;
+
+      $scope.gamePreflight= false;
+      $scope.gameStarted = false;
+      $scope.gameOver = false;
+
+      $scope.gameSlideActive  = true;
+      $scope.gameHasPlayers = false;
+
+      game.welcome = true;
+      game.quickStart = false;  // KEY TO THE APP START OPTIONS
+      game.preflight  = false;
+      game.started  = false;
+      game.over  = false;
+      game.winner = [];
+
+
+
+
+    };
+
+
+    $scope.gameWithTeams = function() { // game without players
+      $scope.gameHasPlayers = false;
+      $scope.gameType = true; // we have chosen a gameType no longer need to see the option buttons
+      $scope.editTeamNames = true;
+
+      // these control 'www/templates/game.html' each using ngf-if to show and hide outer-shell views
+      game.welcome = false;
+      game.preflight  = false;
+      game.quickStart = true;
+      game.started  = false;
+      game.over  = false;
+
+      $scope.initQuickStart();
+    };
+
+
+    $scope.initQuickStart = function() {
+      // these control 'www/templates/game.html' each using ngf-if to show and hide outer-shell views
+      game.welcome = false;
+      game.preflight  = false;
+      game.started  = false;
+      game.over  = false;
+      game.quickStart = true; // init
+
+      $scope.gameHasPlayers = false; // displays view to customize team names with ng-click="startQuickStart()" to start game w/out players passing ->  var players = "teamsOnly"; to  ->  $scope.startGame(players)
+      $scope.editTeamNames = true; // 2nd condition to show customize team name view
+      $scope.gameType = false; //  have not chosen a gameType yet so show option buttons
+    };
+
+    $scope.startQuickStart = function() {
+      // these control 'www/templates/game.html' each using ngf-if to show and hide outer-shell views
+      game.welcome = false;
+      game.preflight  = false;
+      game.started  = true; /// init
+      game.over  = false;
+      game.quickStart = false;
+
+
+      $scope.startGame(game.teams);
+    };
 
 
       ////////////////////////////////////////
-      //  Production players
+      //  Start Game!!   OFFICIAL
       ////////////////////////////////////////
-      var players = [];
-
-
-        $scope.gameWithPlayers = function() { // game with players
-            $scope.gameHasPlayers = true;
-            $scope.gameType = true; // we have chosen a gameType no longer need to see the option buttons
-            game.welcome = false;
-            game.quickStart = false;
-            game.preflight  = true;
-            game.started  = false;
-            game.over  = false;
-            $scope.initPreflight();
-        };
-
-
-        $scope.gameWithTeams = function() { // game without players
-            $scope.gameHasPlayers = false;
-            $scope.gameType = true; // we have chosen a gameType no longer need to see the option buttons
-            $scope.editTeamNames = true;
-
-            game.welcome = false;
-            game.preflight  = false;
-            game.quickStart = true;
-            game.started  = false;
-            game.over  = false;
-            $scope.initQuickStart();
-        };
-
-
-      game.showBuildTeams = function() {
-        game.readyForTeams = true;
+      $scope.startGame = function(teams) {
+        console.log(teams);
+        $scope.gameSlideActive = true;  // slide-in-left our first slide
+        game.step = 0;
+        $scope.selectActiveTeam();
       };
 
-      $scope.initPreflight = function () {
-
-            $scope.gameHasPlayers = true;
-            game.welcome = false;
-            game.preflight  =  true; // init
-            game.started  = false;
-            game.over  = false;
-            game.quickStart = false;
-
+      game.endGame = function(winningTeam) {
+        console.log("game.endGame() called here ........" + winningTeam);
+        game.started = false;
+        game.over = true;
+        game.winner = winningTeam;
       };
 
-      $scope.initQuickStart = function() {
-
-            game.welcome = false;
-            game.preflight  = false;
-            game.started  = false;
-            game.over  = false;
-            game.quickStart = true; // init
-
-            $scope.gameHasPlayers = false; // displays view to customize team names with ng-click="startQuickStart()" to start game w/out players passing ->  var players = "teamsOnly"; to  ->  $scope.startGame(players)
-            $scope.editTeamNames = true; // 2nd condition to show customize team name view
-            $scope.gameType = false; //  have not chosen a gameType yet so show option buttons
-        };
-
-        $scope.startQuickStart = function(teams) { // game without players  tab='tab-game-withTeams'
-            this.teams = teams;
-            console.log("start Quick Start", teams);
-
-            game.welcome = false;
-            game.preflight  = false;
-            game.started  = true; /// init
-            game.over  = false;
-            game.quickStart = false;
-
-            $scope.gameHasPlayers = false;
-            $scope.gameType = true; // we have chosen a gameType no longer need to see the option buttons
-            $scope.editTeamNames = false;
-
-            $scope.welcome = false;
-            $scope.mainMenu = false;
-            $scope.quickStart = false;
-            $scope.gameStarted = true; // init
-            $scope.gamePreflight = false;
-            $scope.gameOver = false;
-
-
-            var players = "teamsOnly";
-            $scope.startGame(players);
-        };
-
-
-        ////////////////////////////////////////
-        //  Start Game!!
-        ////////////////////////////////////////
-        $scope.startGame = function( players) {
-
-          var p = players;
-            console.log("players:  " + p);
-            console.log("Start Game!");
-
-          if ( p  ==  "teamsOnly" ) {
-            console.log("teams only@!!");
-            $scope.gameHasPlayers = false;
-
-              //$state.go('tab.game-withTeams');
-          } else {
-
-            $scope.gameHasPlayers = true;
-            console.log("gameHasPlayers@");
-
-              //$state.go('tab.game-withPlayers');
-          }
-
-          game.hasPlayers = $scope.gameHasPlayers;
-
-          if (game.hasPlayers === true){
-            console.log("The game has players = TRUE");
-
-             $("#game__with__players").removeClass("hidden").addClass("show");  //  requires game.players created during preflight
-              $("#game__with__teams").addClass("hidden"); // default setting,  game cycles back and forth between 2 teams.  quickStart() skips 'preflight' creates  2 default teams passes into app.start
-          }
-
-          if (game.hasPlayers === false){
-            console.log("The game does NOT have players = FALSE");
-          }
-
-          $scope.gameStarted = true;
-          $scope.gameOver = false;
-
-          $scope.needsPlayers = false;
-          $scope.readyForTeams = false;
-          $scope.readyToStart = true;
-
-          game.needsPlayers = false;
-          game.readyForTeams = false;
-          game.readyToStart = true;
-
-          $scope.gameSlideActive = true;
-          game.step = 0;
-          game.playerCount = 0;
-          $scope.step = game.step;
-          //$scope.activeQuestion = game.questions[game.step].question;
-
-          $scope.activePhrase = game.cards[game.step].phrase;
-          console.log(game.cards);
-
-          if (game.hasPlayers === true) {
-              $scope.activePlayer = game.players[game.playerCount];
-          }
-
-          $scope.selectActiveTeam();
-      };
-
-
-
-
-
-      $scope.endGame = function() {
-          $scope.gameOver = true;
-          game.over = true;
-          controlling.log("game.over");
-      };
+      //game.endGame("Team1");
 
 
 
       $scope.nextStep = function() {
           console.log("Next Step called ... ");
 
-          // var maxPlayers = game.players.length;
-          // if (game.playerCount === maxPlayers) {
-          //     game.playerCount = 0;
-          // }
-
           game.step += 1;
           game.playerCount += 1;
           $scope.step = game.step;
-          //$scope.activeQuestion = game.questions[game.step].question;
 
             game.canDeal = false;
             game.cardsVisible = false;
@@ -330,6 +246,13 @@ function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $wind
           $scope.gameStarted = false;
           $scope.gameOver = false;
           $scope.step = game.step;
+
+          game.welcome = false;
+          game.preflight  = false;
+          game.quickStart = true;
+          game.started  = false;
+          game.over  = false;
+
           //$scope.activeQuestion = 0;
           $scope.activePhrase = 0;
           $scope.activePlayer = 0;
@@ -347,34 +270,67 @@ function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $wind
 
               $scope.activeTeam = "Team1";
               $scope.team1Score += 1;
-              //$scope.soundChaChing();
+              $scope.soundChaChing();
               $scope.teamColor = "positive";
 
              if ($scope.team1Score >= 10 ) {
-              $scope.gameStarted = false;
-              $scope.gameOver = true;
-              $scope.winningTeam = "Team1";
-           }
+                $scope.gameStarted = false;
+                $scope.gameOver = true;
+                $scope.winningTeam = "Team1";
+              }
               return;
 
             } else {
                 $scope.activeTeam = "Team2";
                 $scope.team2Score += 1;
-                //$scope.soundChaChing();
+                $scope.soundChaChing();
             $scope.teamColor = "assertive";
 
           if ($scope.team2Score >= 10 ) {
               $scope.gameStarted = false;
               $scope.gameOver = true;
               $scope.winningTeam = "Team2";
+
           }
               return;
           }
       };
 
+      // game.addPointToActiveTeam = function() {
+
+      //   if (game.step % 2 === 0 && game.step != 1) {
+      //     //  Team1 is the active team so give them a point
+      //     //
+      //     //  var team1 = TeamService.newTeam();
+      //     //   var team2 = TeamService.newTeam();
+      //     //   team1.addPoint(1);
+      //     //
+      //     //    if (GameService.maxPoints === team1.points ) {
+      //     //      game.over = true;
+      //     //      game.started = false;
+      //     //      game.winningTeam = "Team1";
+      //     //
+      //     //    }
+      //   } else {
+      //     //    Team2 is the active team so give them a point
+      //     //
+      //     //  if (GameService.maxPoints === team2.points ) {
+      //     //      game.over = true;
+      //     //      game.started = false;
+      //     //      game.winningTeam = "Team1";
+      //     //
+      //     //    }
+      //   }
+
+
+
+      // };
+
+
+      ////  THIS IS A PRODUCTION THING-A-MA-BOB  !!!!
       $scope.selectActiveTeam = function() {
 
-          if (game.step % 2 === 0 && game.step != 1) {
+          if (game.step % 2 === 0 && game.step !== 1) {
 
               game.activeTeam = "Team1";
               console.log(game.activeTeam);
@@ -413,16 +369,20 @@ function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $wind
         $scope.gameSlideActive = true;
       };
 
-
       $scope.unActivateGameSlide = function() {
         $scope.gameSlideActive = false;
       };
 
 
+
+
+
+
+
+
       ////////////////////////////////////////
       // ModalService
       ////////////////////////////////////////
-
       $scope.showStealPoint = function() {
         $scope.secretPhraseVisible = false;
           ModalService
@@ -525,11 +485,18 @@ function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $wind
             $("#dealerDeal").removeClass("show").addClass("hidden");
       };
 
+
+
       game.deal = function(){
             game.canDeal = true;
             game.dealerVisible = false;
             game.cardsDealt = true;
             game.cardsVisible = true;
+            game.activeCards = game.dealer.deal();
+
+            console.log(game.activeCards);
+            // DealerService.deal();
+            console.log("GOING BACK TO INIT TO USE CARDSERVICE.  PICK BACK UP HERE");
 
             $("#dealer").removeClass("show").addClass("hidden");
             $("#dealerDeal").removeClass("show").addClass("hidden");
@@ -561,7 +528,7 @@ function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $wind
           $("#showCountdown").removeClass("show").addClass("hidden");
           $("#countdown").removeClass("hidden").addClass("show");
           $scope.newCountdown();
-          $scope.selectTimer(2);
+          $scope.selectTimer(game.secondsRemaining);
           // game.readyNextTurn() will go to: game.awardPoint or game.noPoint, both of which call game.readyNextTurn() which restarts loop
       };
 
@@ -679,7 +646,6 @@ function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $wind
           $scope.newCountdown();
           $scope.selectTimer(2);
       }
-
    }, true);
 
 
@@ -770,7 +736,7 @@ function GameController($ionicPlatform, $scope, $rootScope, $firebaseAuth, $wind
   "use strict";!function(){for(var a=0,b=["webkit","moz"],c=0;c<b.length&&!window.requestAnimationFrame;++c)window.requestAnimationFrame=window[b[c]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[b[c]+"CancelAnimationFrame"]||window[b[c]+"CancelRequestAnimationFrame"];window.requestAnimationFrame||(window.requestAnimationFrame=function(b){var c=(new Date).getTime(),d=Math.max(0,16-(c-a)),e=window.setTimeout(function(){b(c+d)},d);return a=c+d,e}),window.cancelAnimationFrame||(window.cancelAnimationFrame=function(a){window.clearTimeout(a)})}(),angular.module("angular-svg-round-progress",[]),angular.module("angular-svg-round-progress").constant("roundProgressConfig",{max:50,semi:!1,rounded:!1,responsive:!1,clockwise:!0,radius:100,color:"#45ccce",bgcolor:"#eaeaea",stroke:15,duration:800,animation:"easeOutCubic",offset:0}),angular.module("angular-svg-round-progress").service("roundProgressService",[function(){var a={},b=angular.isNumber,c=document.head.querySelector("base");a.resolveColor=c&&c.href?function(a){var b=a.indexOf("#");return b>-1&&a.indexOf("url")>-1?a.slice(0,b)+window.location.href+a.slice(b):a}:function(a){return a},a.isSupported=!(!document.createElementNS||!document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect);var d=function(a,b,c,d){var e=(d-90)*Math.PI/180;return{x:a+c*Math.cos(e),y:b+c*Math.sin(e)}};return a.toNumber=function(a){return b(a)?a:parseFloat((a+"").replace(",","."))},a.getOffset=function(b,c){var d=+c.offset||0;if("inherit"===c.offset)for(var e,f=b;!f.hasClass("round-progress-wrapper");)a.isDirective(f)&&(e=f.scope().$parent.getOptions(),d+=(+e.offset||0)+(+e.stroke||0)),f=f.parent();return d},a.updateState=function(a,b,c,e,f,g){if(!f)return e;var h=a>0?Math.min(a,b):0,i=g?180:359.9999,j=0===b?0:h/b*i,k=f/2,l=d(k,k,c,j),m=d(k,k,c,0),n=180>=j?"0":"1",o=["M",l.x,l.y,"A",c,c,0,n,0,m.x,m.y].join(" ");return e.attr("d",o)},a.isDirective=function(a){return a&&a.length?"undefined"!=typeof a.attr("round-progress")||"round-progress"===a[0].nodeName.toLowerCase():!1},a.animations={linearEase:function(a,b,c,d){return c*a/d+b},easeInQuad:function(a,b,c,d){return c*(a/=d)*a+b},easeOutQuad:function(a,b,c,d){return-c*(a/=d)*(a-2)+b},easeInOutQuad:function(a,b,c,d){return(a/=d/2)<1?c/2*a*a+b:-c/2*(--a*(a-2)-1)+b},easeInCubic:function(a,b,c,d){return c*(a/=d)*a*a+b},easeOutCubic:function(a,b,c,d){return c*((a=a/d-1)*a*a+1)+b},easeInOutCubic:function(a,b,c,d){return(a/=d/2)<1?c/2*a*a*a+b:c/2*((a-=2)*a*a+2)+b},easeInQuart:function(a,b,c,d){return c*(a/=d)*a*a*a+b},easeOutQuart:function(a,b,c,d){return-c*((a=a/d-1)*a*a*a-1)+b},easeInOutQuart:function(a,b,c,d){return(a/=d/2)<1?c/2*a*a*a*a+b:-c/2*((a-=2)*a*a*a-2)+b},easeInQuint:function(a,b,c,d){return c*(a/=d)*a*a*a*a+b},easeOutQuint:function(a,b,c,d){return c*((a=a/d-1)*a*a*a*a+1)+b},easeInOutQuint:function(a,b,c,d){return(a/=d/2)<1?c/2*a*a*a*a*a+b:c/2*((a-=2)*a*a*a*a+2)+b},easeInSine:function(a,b,c,d){return-c*Math.cos(a/d*(Math.PI/2))+c+b},easeOutSine:function(a,b,c,d){return c*Math.sin(a/d*(Math.PI/2))+b},easeInOutSine:function(a,b,c,d){return-c/2*(Math.cos(Math.PI*a/d)-1)+b},easeInExpo:function(a,b,c,d){return 0==a?b:c*Math.pow(2,10*(a/d-1))+b},easeOutExpo:function(a,b,c,d){return a==d?b+c:c*(-Math.pow(2,-10*a/d)+1)+b},easeInOutExpo:function(a,b,c,d){return 0==a?b:a==d?b+c:(a/=d/2)<1?c/2*Math.pow(2,10*(a-1))+b:c/2*(-Math.pow(2,-10*--a)+2)+b},easeInCirc:function(a,b,c,d){return-c*(Math.sqrt(1-(a/=d)*a)-1)+b},easeOutCirc:function(a,b,c,d){return c*Math.sqrt(1-(a=a/d-1)*a)+b},easeInOutCirc:function(a,b,c,d){return(a/=d/2)<1?-c/2*(Math.sqrt(1-a*a)-1)+b:c/2*(Math.sqrt(1-(a-=2)*a)+1)+b},easeInElastic:function(a,b,c,d){var e=1.70158,f=0,g=c;return 0==a?b:1==(a/=d)?b+c:(f||(f=.3*d),g<Math.abs(c)?(g=c,e=f/4):e=f/(2*Math.PI)*Math.asin(c/g),-(g*Math.pow(2,10*(a-=1))*Math.sin((a*d-e)*(2*Math.PI)/f))+b)},easeOutElastic:function(a,b,c,d){var e=1.70158,f=0,g=c;return 0==a?b:1==(a/=d)?b+c:(f||(f=.3*d),g<Math.abs(c)?(g=c,e=f/4):e=f/(2*Math.PI)*Math.asin(c/g),g*Math.pow(2,-10*a)*Math.sin((a*d-e)*(2*Math.PI)/f)+c+b)},easeInOutElastic:function(a,b,c,d){var e=1.70158,f=0,g=c;return 0==a?b:2==(a/=d/2)?b+c:(f||(f=d*(.3*1.5)),g<Math.abs(c)?(g=c,e=f/4):e=f/(2*Math.PI)*Math.asin(c/g),1>a?-.5*(g*Math.pow(2,10*(a-=1))*Math.sin((a*d-e)*(2*Math.PI)/f))+b:g*Math.pow(2,-10*(a-=1))*Math.sin((a*d-e)*(2*Math.PI)/f)*.5+c+b)},easeInBack:function(a,b,c,d,e){return void 0==e&&(e=1.70158),c*(a/=d)*a*((e+1)*a-e)+b},easeOutBack:function(a,b,c,d,e){return void 0==e&&(e=1.70158),c*((a=a/d-1)*a*((e+1)*a+e)+1)+b},easeInOutBack:function(a,b,c,d,e){return void 0==e&&(e=1.70158),(a/=d/2)<1?c/2*(a*a*(((e*=1.525)+1)*a-e))+b:c/2*((a-=2)*a*(((e*=1.525)+1)*a+e)+2)+b},easeInBounce:function(b,c,d,e){return d-a.animations.easeOutBounce(e-b,0,d,e)+c},easeOutBounce:function(a,b,c,d){return(a/=d)<1/2.75?c*(7.5625*a*a)+b:2/2.75>a?c*(7.5625*(a-=1.5/2.75)*a+.75)+b:2.5/2.75>a?c*(7.5625*(a-=2.25/2.75)*a+.9375)+b:c*(7.5625*(a-=2.625/2.75)*a+.984375)+b},easeInOutBounce:function(b,c,d,e){return e/2>b?.5*a.animations.easeInBounce(2*b,0,d,e)+c:.5*a.animations.easeOutBounce(2*b-e,0,d,e)+.5*d+c}},a}]),angular.module("angular-svg-round-progress").directive("roundProgress",["$window","roundProgressService","roundProgressConfig",function(a,b,c){var d={restrict:"EA",replace:!0,transclude:!0,scope:{current:"=",max:"=",semi:"=",rounded:"=",clockwise:"=",responsive:"=",radius:"@",color:"@",bgcolor:"@",stroke:"@",duration:"@",animation:"@",offset:"@"}};return b.isSupported?angular.extend(d,{link:function(e,f){var g,h,i=!f.hasClass("round-progress-wrapper"),j=i?f:f.find("svg").eq(0),k=j.find("path").eq(0),l=j.find("circle").eq(0),m=angular.copy(c);e.getOptions=function(){return m};var n=function(){var a=m.semi,c=m.responsive,d=+m.radius||0,e=+m.stroke,g=2*d,h=d-e/2-b.getOffset(f,m);j.css({top:0,left:0,position:c?"absolute":"static",width:c?"100%":g+"px",height:c?"100%":(a?d:g)+"px",overflow:"hidden"}),i||(j[0].setAttribute("viewBox","0 0 "+g+" "+(a?d:g)),f.css({width:c?"100%":"auto",position:"relative","padding-bottom":c?a?"50%":"100%":0})),f.css({width:c?"100%":"auto",position:"relative","padding-bottom":c?a?"50%":"100%":0}),k.css({stroke:b.resolveColor(m.color),"stroke-width":e,"stroke-linecap":m.rounded?"round":"butt"}),a?k.attr("transform",m.clockwise?"translate(0,"+g+") rotate(-90)":"translate("+g+", "+g+") rotate(90) scale(-1, 1)"):k.attr("transform",m.clockwise?"":"scale(-1, 1) translate("+-g+" 0)"),l.attr({cx:d,cy:d,r:h>=0?h:0}).css({stroke:b.resolveColor(m.bgcolor),"stroke-width":e})},o=function(c,d,e){var h=b.toNumber(m.max||0),i=c>0?a.Math.min(c,h):0,j=d===i||0>d?0:d||0,l=i-j,n=b.animations[m.animation],o=new a.Date,p=+m.duration||0,q=e||c>h&&d>h||0>c&&0>d||25>p,r=m.radius,s=r-m.stroke/2-b.getOffset(f,m),t=2*r,u=m.semi;q?b.updateState(i,h,s,k,t,u):(a.cancelAnimationFrame(g),function v(){var c=a.Math.min(new Date-o,p);b.updateState(n(c,j,l,p),h,s,k,t,u),p>c&&(g=a.requestAnimationFrame(v))}())},p=Object.keys(d.scope).filter(function(a){return"current"!==a});e.$watchGroup(p,function(a){for(var b=0;b<a.length;b++)"undefined"!=typeof a[b]&&(m[p[b]]=a[b]);n(),e.$broadcast("$parentOffsetChanged"),"inherit"!==m.offset||h?"inherit"!==m.offset&&h&&h():h=e.$on("$parentOffsetChanged",function(){o(e.current,e.current,!0),n()})}),e.$watchGroup(["current","max","animation","duration","radius","stroke","semi","offset"],function(a,c){o(b.toNumber(a[0]),b.toNumber(c[0]))})},template:function(a){for(var c=a.parent(),d="round-progress",e=['<svg class="'+d+'" xmlns="http://www.w3.org/2000/svg">','<circle fill="none"/>','<path fill="none"/>',"<g ng-transclude></g>","</svg>"];c.length&&!b.isDirective(c);)c=c.parent();return c&&c.length||(e.unshift('<div class="round-progress-wrapper">'),e.push("</div>")),e.join("\n")}}):angular.extend(d,{template:'<div class="round-progress" ng-transclude></div>'})}])
 ////
 ////   GAME CONTROLLER FOOTER    ////
-  game.init();
+  game.init(card_types);
   //game.demoMakePlayers();
 
   $scope.hideLoading = function() {

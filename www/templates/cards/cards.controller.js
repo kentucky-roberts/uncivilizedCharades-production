@@ -6,11 +6,11 @@ CardsController.$inject = ['$scope', '$rootScope',  '$window', '$interval', '$ti
 
 function CardsController($scope, $rootScope, $window, $interval, $timeout, $ionicModal, $ionicLoading, $http, $ionicTabsDelegate, ionicToast, ngAudio, CardService, CountdownService, ModalService) {
 
-  	var cardTypes = CardService.all();
-  	var threeCards = CardService.threeCards();
+  	// var cardTypes = CardService.all();
+  	// var threeCards = CardService.threeCards();
 
 	$scope.cards = {
-	    master: threeCards,
+	    master: [],
 	    active: [],
 	    activeCard: [],
 	    discards: [],

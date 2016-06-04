@@ -3,9 +3,9 @@ angular
   .module('app')
     .factory('DealerService', DealerService);
 
-DealerService.$inject = ['$timeout', 'GameService'];
+DealerService.$inject = ['$timeout', 'GameService', 'CardService', 'TeamService'];
 
-function DealerService ($timeout, GameService) {
+function DealerService ($timeout, GameService, CardService, TeamService) {
 
   var service = {
       newDealer: newDealer,
@@ -23,7 +23,6 @@ function DealerService ($timeout, GameService) {
 
     dealer.init = function () {
       dealer.cards = [];
-      dealer.handValue = 0;
       dealer.isDone = false;
       dealer.busted = false;
       dealer.maxValue = 21;
@@ -32,17 +31,24 @@ function DealerService ($timeout, GameService) {
 
     dealer.deal = function () {
         dealer.init();
-        dealer.hit(true, false, dealer.getHandValue);
-        dealer.hit(false, false, dealer.getHandValue);
+        dealer.hit();
+        dealer.hit();
+        dealer.hit();
     };
 
-    dealer.hit = function (hideCard, animate, callback) {
+    dealer.hit = function () {
       var card = dealer.deck.deal();
-      card.hideValue = hideCard;
       dealer.cards.push(card);
-      //callback();
+      dealer.callback();
     };
 
+    dealer.callback = function () {
+      console.log("callback()");
+    };
+
+    dealer.getHandValue = function () {
+      console.log("getHandValue");
+    };
 
 
 

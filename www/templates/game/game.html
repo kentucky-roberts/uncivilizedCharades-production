@@ -4,11 +4,13 @@
 
 
     <div class="{{(game.canDeal === true || game.cardsDealt === true ) ? 'show' : 'hidden'}} ">
-      <td-cards>
-        <td-card class="card card-0  {{(game.cardFaceVisible === true) ? 'card-face' : 'card-back' }} "></td-card>
-        <td-card class="card card-1  {{(game.cardFaceVisible === true) ? 'card-face' : 'card-back'  }} "></td-card>
-        <td-card class="card card-2  {{(game.cardFaceVisible === true) ? 'card-face' : 'card-back'  }} "></td-card>
-      </td-cards>
+
+        <td-cards>
+          <td-card class="swipe-card card card-{$index}  {{(game.cardFaceVisible === true) ? 'card-face' : 'card-back' }} " ng-repeat="card in game.deck.dealt.cards">
+              {{card.phrase}}
+          </td-card>
+        </td-cards>
+
     </div>
 
 
@@ -42,7 +44,7 @@
             <div id="dealer" class="show">
                 <h3 class="instruction-test">Push button to deal cards</h3>
                 <button class="deal-cards button button-energized button-large" ng-click="game.deal()">Deal Cards</button>
-                <button class="deal-cards button button-energized button-large" ng-click="endGame();">end game</button>
+                <button class="deal-cards button button-energized button-large" ng-click="game.endGame(Team1);">end game</button>
             </div>
             <div id="showCards" class="hidden">
                 <h3 class="instruction-test">Push button to show cards</h3>
