@@ -16,7 +16,7 @@
   var transitionKeys = ['webkitTransition', 'transition', '-webkit-transition', 'webkit-transition',
               '-moz-transition', 'moz-transition', 'MozTransition', 'mozTransition'];
   var TRANSITION = 'webkitTransition';
-  for(var i = 0; i < transitionKeys.length; i++) {
+  for(i = 0; i < transitionKeys.length; i++) {
     if(d.style[transitionKeys[i]] !== undefined) {
       TRANSITION = transitionKeys[i];
       break;

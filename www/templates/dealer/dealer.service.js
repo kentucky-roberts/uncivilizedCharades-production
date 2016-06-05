@@ -3,9 +3,9 @@ angular
   .module('app')
     .factory('DealerService', DealerService);
 
-DealerService.$inject = ['$timeout', 'GameService', 'CardService', 'TeamService'];
+DealerService.$inject = ['$timeout', '$q', 'GameService', 'CardService', 'TeamService'];
 
-function DealerService ($timeout, GameService, CardService, TeamService) {
+function DealerService ($timeout, $q, GameService, CardService, TeamService) {
 
   var service = {
       newDealer: newDealer,

@@ -17,15 +17,15 @@
     <div class="fixed__outside--top">
       <div class="row">
         <div class="col">
-            <div id="team1__score" class="text--center text--yellow  {{(game.activeTeam === game.teams[0] ) ? 'text--yellow' : 'text--white' }}">
+            <div id="team1__score" class="text--center">
               Team1:
-              <strong>{{game.team1Score}}</strong>
+              <strong>{{game.teams.team2.score}}</strong>
             </div>
           </div>
         <div class="col">
-          <div id="team2__score" class="text--center {{(game.activeTeam === game.teams[1] ) ? 'text--yellow' : 'text--white' }}">
+          <div id="team2__score" class="text--center">
             Team2:
-            <strong>{{game.team2Score}}</strong>
+            <strong>{{game.teams.team2.score}}</strong>
           </div>
         </div>
       </div>

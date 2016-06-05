@@ -34,9 +34,20 @@ function CardService($timeout, $http){
       this.cards = [];
       this.dealt = [];
       this.card_types = card_types;
-      this.phrases = ["Run fast", "Eat snails", "Talk to turtles", "Scuba dive"];
-      this.alt_phrases = ["Eat Pizza", "Find Waldo", "Carpet cleaning", "Do jumpingjacks" ];
-      console.log("card_types" + card_types);
+      this.phrases = [];
+      this.alt_phrase = [];
+      //this.phrases = ["Run fast", "Eat snails", "Talk to turtles", "Scuba dive"];
+      //this.alt_phrases = ["Eat Pizza", "Find Waldo", "Carpet cleaning", "Do jumpingjacks" ];
+      console.log("card_types" + card_types[0].phrase);
+
+      deck.card_types.phrases.forEach(function (phrase) {
+        deck.card_types.alt_phrases.forEach(function (alt_phrase){
+          deck.phrases.push(phrase);
+          deck.alt_phrases.push(alt_phrase);
+        });
+      });
+
+
 
       deck.phrases.forEach(function (phrase) {
         deck.alt_phrases.forEach(function(alt_phrase){
