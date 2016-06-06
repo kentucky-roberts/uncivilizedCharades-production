@@ -4,6 +4,12 @@
 
 
     <div class="{{(game.canDeal === true || game.cardsDealt === true ) ? 'show' : 'hidden'}} ">
+      <div>
+        <h1>Message here</h1>
+        <ul>
+          <li ng-repeat="card in game.dealer.deck.cards">{{card.phrase}}</li>
+        </ul>
+      </div>
 
         <td-cards>
           <td-card class="swipe-card card card-{$index}  {{(game.cardFaceVisible === true) ? 'card-face' : 'card-back' }} " ng-repeat="card in game.deck.dealt.cards">
@@ -18,13 +24,13 @@
       <div class="row">
         <div class="col">
             <div id="team1__score" class="text--center">
-              Team1:
-              <strong>{{game.teams.team2.score}}</strong>
+              {{game.teams.team1.teamName}}:
+              <strong>{{game.teams.team1.score}}</strong>
             </div>
           </div>
         <div class="col">
           <div id="team2__score" class="text--center">
-            Team2:
+            {{game.teams.team2.teamName}}:
             <strong>{{game.teams.team2.score}}</strong>
           </div>
         </div>
