@@ -59,13 +59,15 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
 
     game.card_types = [];
+    game.phrases = [];
+    game.alt_phrases = [];
 
     activate();
 
     function activate() {
         return getCards().then(function() {
           console.log("... returning cards", game.card_types);
-          game.init(game.card_types);
+          game.init(game.phrases, game.alt_phrases);
         });
     }
 
@@ -73,67 +75,36 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
         return dataservice.getCards()
             .then(function(data) {
                 game.card_types = data;
-                //console.log(card_types);
+
+                game.card_types.forEach(function (phrase) {
+                  game.phrases.push(phrase);
+                  console.log("pushing phrase: " + phrase);
+                });
+
+                  game.card_types.forEach(function (alt_phrase) {
+                      game.alt_phrases.push(alt_phrase);
+                      console.log("pushing alt_phrase: " + alt_phrase);
+                  });
+
+                console.log(game.phrases);
                 return game.card_types;
             });
 
 
     }
-   //console.log(game.card_types);
 
-   //activate();
+   var phrases = game.phrases;
+   var alt_phrases = game.alt_phraes;
 
-// function activate() {
-//     /**
-//      * Step 1
-//      * Ask the getAvengers function for the
-//      * avenger data and wait for the promise
-//      */
-//     return getCards().then(function() {
-//         /**
-//          * Step 4
-//          * Perform an action on resolve of final promise
-//          */
-//         console.log('getting cards ...');
-//     });
-// }
+    game.init = function (phrases, alt_phrases) {
+      console.log("game.init was called: ", phrases, alt_phrases);
 
-// function getCards() {
-//       *
-//        * Step 2
-//        * Ask the data service for the data and wait
-//        * for the promise
-
-//       return dataservice.getCards()
-//           .then(function(data) {
-//               /**
-//                * Step 3
-//                * set the data and resolve the promise
-//                */
-//               game.card_types = data;
-//               console.log(game.card_types);
-//               return game.card_types;
-//       });
-// }
-// activate();
-
-    // var card_types = function() {
-    //     $http.get('api/card_types.json').then(function (cardData) {
-    //       var newCards = cardData.data;
-    //       var newTotalCards = newCards.length;
-    //     });
-    // };
-    // console.log(card_types);
-
-
-
-    game.init = function (card_types) {
-      console.log("game.init was called" + card_types.length);
-
-      game.card_types = card_types;  // FIX THIS
+      game.phrases = phrases;  // FIX THIS
+      game.alt_phrases = alt_phrases;
       game.maxScore = GameService.maxScore();
       game.secondsRemaining = GameService.maxTime();
-      game.deck = CardService.newDeck(card_types);  // create a deck of cards and pass it into the game
+
+      game.deck = CardService.newDeck(phrases, alt_phrases);  // create a deck of cards and pass it into the game
       console.log(game.deck);
       //
       //

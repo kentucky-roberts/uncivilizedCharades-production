@@ -12,8 +12,8 @@ function CardService($timeout, $http){
         Card: Card
     };
 
-    function newDeck(card_types){
-        var deck = new Deck(card_types);
+    function newDeck(phrases, alt_phrases){
+        var deck = new Deck(phrases, alt_phrases);
         return deck;
     }
 
@@ -29,23 +29,16 @@ function CardService($timeout, $http){
     // var alt_phrases = ["Eat Pizza", "Find Waldo", "Carpet cleaning", "Do jumpingjacks" ];
 
 
-    function Deck(card_types) {
+    function Deck(phrases, alt_phrases) {
       var deck = this;
       this.cards = [];
       this.dealt = [];
-      this.card_types = card_types;
-      this.phrases = [];
-      this.alt_phrase = [];
+      this.phrases = phrases;
+      this.alt_phrases = alt_phrases;
+      console.log(this.alt_phrases);
       //this.phrases = ["Run fast", "Eat snails", "Talk to turtles", "Scuba dive"];
       //this.alt_phrases = ["Eat Pizza", "Find Waldo", "Carpet cleaning", "Do jumpingjacks" ];
-      console.log("card_types" + card_types[0].phrase);
-
-      deck.card_types.phrases.forEach(function (phrase) {
-        deck.card_types.alt_phrases.forEach(function (alt_phrase){
-          deck.phrases.push(phrase);
-          deck.alt_phrases.push(alt_phrase);
-        });
-      });
+      // console.log("card_types" + card_types[0].phrase);
 
 
 
@@ -60,11 +53,12 @@ function CardService($timeout, $http){
 
     }
 
-    Deck.prototype.phrases = function(phrases) {
-      this.phrases = phrases;
+    Deck.prototype.phrases = function() {
+
+        this.phrases = phrases;
     };
 
-     Deck.prototype.alt_phrases = function(alt_phrases) {
+     Deck.prototype.alt_phrases = function() {
       this.alt_phrases = alt_phrases;
     };
 
