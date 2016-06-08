@@ -67,6 +67,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
     function activate() {
         return getCards().then(function() {
           console.log("... returning cards", game.card_types);
+          //console.log(game.phrases);
           game.init(game.phrases, game.alt_phrases);
         });
     }
@@ -75,6 +76,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
         return dataservice.getCards()
             .then(function(data) {
                 game.card_types = data;
+                console.log(game.card_types);
 
                 game.card_types.forEach(function (phrase) {
                   game.phrases.push(phrase);
@@ -86,7 +88,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
                       console.log("pushing alt_phrase: " + alt_phrase);
                   });
 
-                console.log(game.phrases);
+                //console.log(game.phrases);
                 return game.card_types;
             });
 
@@ -235,13 +237,9 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
       };
       //game.endGame("Team1");
 
-
-
       $scope.nextStep = function() {
           console.log("Next Step called ... ");
-
           game.step += 1;
-          game.playerCount += 1;
           $scope.step = game.step;
 
           game.canDeal = false;
@@ -249,16 +247,13 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
           game.cardsDealt = false;
           game.cardFaceVisible = false;
 
-
-          if (game.hasPlayers === true) {
-                $scope.activePlayer = game.players[game.playerCount];
-          }
-
-          //$scope.activePhrase = game.phrases[game.step].phrase;
-         // $("animated ").addClass("bounceOutUp");
-
          $scope.selectActiveTeam();  //  Also controlling  //  $scope.gameSlideActive = false || true
+      };
 
+      $scope.firstStep = function() {
+          game.step = 1;
+          game.playerCount = 0;
+          $scope.step = game.step;
       };
 
       $scope.lastStep = function() {
@@ -268,15 +263,8 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
              $scope.activePlayer = game.players[game.step];
       };
 
-      $scope.firstStep = function() {
-          game.step = 1;
-          game.playerCount = 0;
-          $scope.step = game.step;
-      };
-
       $scope.resetGame = function() {
           game.step = 0;
-          game.playerCount = 0;
           $scope.gameStarted = false;
           $scope.gameOver = false;
           $scope.step = game.step;
@@ -301,29 +289,20 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
           if (game.step % 2 === 0 && game.step != 1) {
 
-              $scope.activeTeam = "Team1";
-              $scope.team1Score += 1;
+              game.teams.team1.addPoint();
               $scope.soundChaChing();
               $scope.teamColor = "positive";
 
-             if ($scope.team1Score >= 10 ) {
-                $scope.gameStarted = false;
-                $scope.gameOver = true;
-                $scope.winningTeam = "Team1";
-              }
-              return;
-
+            if (game.teams.team1.score >= 10 ) {
+                game.endGame(game.teams.team1);
+              } return;
             } else {
-                $scope.activeTeam = "Team2";
-                $scope.team2Score += 1;
+                game.teams.team2.addPoint();
                 $scope.soundChaChing();
-            $scope.teamColor = "assertive";
+                $scope.teamColor = "assertive";
 
-          if ($scope.team2Score >= 10 ) {
-              $scope.gameStarted = false;
-              $scope.gameOver = true;
-              $scope.winningTeam = "Team2";
-
+          if (game.teams.team2.score >= 10 ) {
+              game.endGame(game.teams.team2);
           }
               return;
           }
@@ -365,7 +344,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
           if (game.step % 2 === 0 && game.step !== 1) {
 
-              game.activeTeam = "Team1";
+              game.activeTeam = game.teams.team1;
               console.log(game.activeTeam);
               $scope.gameSlideActive = false;
 
@@ -380,7 +359,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
               $scope.swapSlides();
               return;
           } else {
-              game.activeTeam = "Team2";
+              game.activeTeam = game.teams.team2;
               console.log(game.activeTeam);
               $scope.gameSlideActive = false;
 
@@ -502,7 +481,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
       game.deal = function () {
 
-
+            game.dealer.deal();
 
             game.canDeal = true;
             game.dealerVisible = false;
@@ -531,6 +510,9 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
           game.canDeal = false;
           game.cardsDealt = false;
           game.cardFaceVisible = false;
+
+          //game.dealer.activateCard();
+
           $("#activateCard").removeClass("show").addClass("hidden");
           $("#showCountdown").removeClass("hidden").addClass("show");
          game.showCountdown();

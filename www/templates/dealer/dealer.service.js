@@ -23,6 +23,7 @@ function DealerService ($timeout, $q, GameService, CardService, TeamService) {
 
     dealer.init = function () {
       dealer.cards = [];
+      dealer.dealt = [];
       dealer.isDone = false;
       dealer.busted = false;
       dealer.maxValue = 21;
@@ -36,9 +37,16 @@ function DealerService ($timeout, $q, GameService, CardService, TeamService) {
         dealer.hit();
     };
 
+    // dealer.activateCard = function ($index) {
+    //   var cardToActivate = dealer.deck.activateCard($index);
+    //   console.log(cardToActivate);
+    // };
+
     dealer.hit = function () {
+
       var card = dealer.deck.deal();
-      dealer.cards.push(card);
+      console.log(card);
+      dealer.dealt.push(card);
       dealer.callback();
     };
 

@@ -11059,6 +11059,10 @@ background: transparent;
   background-color: #555555; }
 
 /** Background from http://www.transparenttextures.com/ **/
+cards--container {
+  width: 100%;
+  height: 650px; }
+
 td-cards {
   display: block;
   position: absolute;

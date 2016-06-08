@@ -17,7 +17,9 @@
                 </div>
               </div>
 
-                <p class="lead text--center"><strong>+1 Point</strong> {{activePlayer.name || game.activeTeam }} </p>
+              <h2 class="text--center">{{game.dealer.deck.activeCard.phrase || "Insert Phrase Here" }}</h2>
+
+                <p class="lead text--center"><strong>+1 Point</strong> {{game.activeTeam.teamName || 'Active Team Name'}}</p>
                 <br>
                 <br>
                 <button class="button button-light button-outline icon ion-checkmark text--white" ng-click="addPointToActiveTeam();closeModal();nextStep();nextHand();"> Continue </button>

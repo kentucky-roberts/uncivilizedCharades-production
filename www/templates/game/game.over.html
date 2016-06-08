@@ -1,2 +1,7 @@
- <h1>Game Over</h1>
- <h2>The winning team is {{ game.winner.team }} </h2>
+<h2>Congratulations {{ game.winner.team.name || "Winning Team" }}!</h2>
+<a href="#"><i class="ion-trophy icon-winner bigIcon" style="font-size: 200px; text-align: center;"></i> </a>
+
+
+<div class="fixed-outside-bottom">
+  <button class="button button-large button-outline button-stable lead center--block" ng-click="resetGame();">Play Again?</button>
+</div>

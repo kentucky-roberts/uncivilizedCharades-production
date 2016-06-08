@@ -7,16 +7,32 @@
       <div>
         <h1>Message here</h1>
         <ul>
-          <li ng-repeat="card in game.dealer.deck.cards">{{card.phrase}}</li>
+          <li ng-repeat="card in game.dealer.deck.dealt">{{card.phrase.phrase}}</li>
         </ul>
       </div>
 
-        <td-cards>
-          <td-card class="swipe-card card card-{$index}  {{(game.cardFaceVisible === true) ? 'card-face' : 'card-back' }} " ng-repeat="card in game.deck.dealt.cards">
-              {{card.phrase}}
+
+      <div class="cards--container" ng-controller="CardsController">
+        <td-cards control="cardsControl">
+          <td-card ng-repeat="card in game.dealer.deck.dealt"
+            on-destroy="cardDestroyed($index)"
+            on-swipe-up="cardSwippedUp($index)"
+            on-double-tap="togglePhrase()"
+            on-transition-left="cardSwippedLeft($index)"
+            on-transition-right="cardSwippedRight($index)"
+            on-partial-swipe="cardPartialSwipe(amt)"
+            class="card card-{$index} {{(game.cardFaceVisible === true) ? 'card-face' : 'card-back' }}">
+
+              <h1 class="td--phrase {{(game.cardFaceVisible === true && showAltPhrase === false) ? 'show' : 'hidden'}}">
+                {{card.phrase.phrase}}
+              </h1>
+              <h1 class="td--alt-phrase {{(game.cardFaceVisible === true && showAltPhrase === true) ? 'show' : 'hidden'}}">
+                {{card.alt_phrase.alt_phrase}}
+              </h1>
+
           </td-card>
         </td-cards>
-
+      </div>
     </div>
 
 
@@ -38,7 +54,7 @@
 
       <div class="item" id="game__with__teams">
         <h2 class="active-team">Active Team</h2>
-        <h1>{{game.activeTeam || 'Active Team Name'}}</h1>
+        <h1>{{game.activeTeam.teamName || 'Active Team Name'}}</h1>
       </div>
 
 
@@ -49,7 +65,7 @@
          <div class="col">
             <div id="dealer" class="show">
                 <h3 class="instruction-test">Push button to deal cards</h3>
-                <button class="deal-cards button button-energized button-large" ng-click="game.deal()">Deal Cards</button>
+                <button class="deal-cards button button-energized button-large" ng-click="game.deal();deal();">Deal Cards</button>
                 <button class="deal-cards button button-energized button-large" ng-click="game.endGame(Team1);">end game</button>
             </div>
             <div id="showCards" class="hidden">

@@ -22,11 +22,11 @@ function CardsController($scope, $rootScope, $window, $interval, $timeout, $ioni
 
 	$scope.cardDestroyed = function(index) {
 		console.log("$scope.cardDestroyed(index) was called here" + $scope.cards.master.length );
-	   // $scope.cards.master.splice(index, 1);  // Remove a card from ->  $scope.cards.master
+	$scope.cards.master.splice(index, 1);  // Remove a card from ->  $scope.cards.master
 
-	var recycledCard = $scope.cards.master[index];
-	console.log(recycledCard);
-	    $scope.cards.master.push(angular.extend({}, recycledCard));
+	// var recycledCard = $scope.cards.master[index];
+	// console.log(recycledCard);
+	//     $scope.cards.master.push(angular.extend({}, recycledCard));
 
 	};
 
@@ -39,6 +39,7 @@ function CardsController($scope, $rootScope, $window, $interval, $timeout, $ioni
 
 
 	$scope.deal = function() {
+		console.log("DEAL!");
 	    $scope.refreshCards();
 	    //$scope.activeCards = DealerService.dealThreeCards();
 	    // var dealtCards = threeCards ;
@@ -75,14 +76,14 @@ function CardsController($scope, $rootScope, $window, $interval, $timeout, $ioni
 
 	$scope.cardSwipedLeft = function(index) {
 		console.log('LEFT SWIPE');
-	    //$scope.addCard();
-	 //   $scope.cardDestroyed(index);
+	    $scope.addCard();
+	   $scope.cardDestroyed(index);
 	};
 
 	$scope.cardSwipedRight = function(index) {
 	    console.log('RIGHT SWIPE');
-	    //$scope.addCard();
-	   // $scope.cardDestroyed(index);
+	    $scope.addCard();
+	   $scope.cardDestroyed(index);
 	};
 
 	$scope.activateCard = function(index) {
@@ -91,7 +92,7 @@ function CardsController($scope, $rootScope, $window, $interval, $timeout, $ioni
 	    $scope.cards.activeCard.push(angular.extend({}, index));
 	    console.log($scope.cards.activeCard);
 
-  		var activeCard = CardService.activeCard(index);
+  		//var activeCard = CardService.activeCard(index);
 
 		CountdownService.setFalseTag();
 
@@ -123,7 +124,7 @@ function CardsController($scope, $rootScope, $window, $interval, $timeout, $ioni
 	$scope.cardSwipedUp = function(index) {
 	    console.log('UP SWIPE');
 
-	    $scope.activateCard(index);
+	    //$scope.activateCard(index);
 
 	    $scope.cardsVisible = false;
 	    $scope.activeCardVisible = false;
@@ -188,4 +189,4 @@ function CardsController($scope, $rootScope, $window, $interval, $timeout, $ioni
 	    		$scope.cards.discards.push(discarded);
 	    		console.log($scope.cards.discards);
 	});
-};
+}

@@ -17,29 +17,14 @@ function CardService($timeout, $http){
         return deck;
     }
 
-
-
-    // var card_types = $http.get('api/card_types.json').then(function (cardData) {
-    //       var newCards = cardData.data;
-    //       var newTotalCards = newCards.length;
-    //     });
-
-
-    // var phrases = ["Run fast", "Eat snails", "Talk to turtles", "Scuba dive"];
-    // var alt_phrases = ["Eat Pizza", "Find Waldo", "Carpet cleaning", "Do jumpingjacks" ];
-
-
     function Deck(phrases, alt_phrases) {
       var deck = this;
       this.cards = [];
       this.dealt = [];
+      // this.activeCard = [];
       this.phrases = phrases;
       this.alt_phrases = alt_phrases;
-      console.log(this.alt_phrases);
-      //this.phrases = ["Run fast", "Eat snails", "Talk to turtles", "Scuba dive"];
-      //this.alt_phrases = ["Eat Pizza", "Find Waldo", "Carpet cleaning", "Do jumpingjacks" ];
-      // console.log("card_types" + card_types[0].phrase);
-
+//      console.log(this.alt_phrases);
 
 
       deck.phrases.forEach(function (phrase) {
@@ -62,11 +47,25 @@ function CardService($timeout, $http){
       this.alt_phrases = alt_phrases;
     };
 
+    // Deck.prototype.activateCard = function (index) {
+    //   var cardToActivate = this.dealt.slice(1, index);
+    //   if(angular.isDefined(cardToActivate)){
+    //         this.activeCard.push(cardToActivate);
+    //         //console.log(this.activeCard);
+    //         return cardToActivate;
+    //     }
+    //     else {
+    //         return false;
+    //     }
+
+    // };
+
     Deck.prototype.deal = function(){
-        var card = this.cards.shift();
-        if(angular.isDefined(card)){
-            this.dealt.push(card);
-            return card;
+        var cards = this.cards.slice(0, 3);
+        console.log(cards);
+        if(angular.isDefined(cards)){
+            this.dealt.push(cards);
+            return cards;
         }
         else {
             return false;

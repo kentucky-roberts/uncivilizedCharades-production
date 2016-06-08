@@ -181,15 +181,15 @@
           self._transformOriginLeft();
         }
 
-        ionic.requestAnimationFrame(function() { self._doDragStart(e) });
+        ionic.requestAnimationFrame(function() { self._doDragStart(e);});
       }, this.el);
 
       ionic.onGesture('drag', function(e) {
-        ionic.requestAnimationFrame(function() { self._doDrag(e) });
+        ionic.requestAnimationFrame(function() { self._doDrag(e);});
       }, this.el);
 
       ionic.onGesture('dragend', function(e) {
-        ionic.requestAnimationFrame(function() { self._doDragEnd(e) });
+        ionic.requestAnimationFrame(function() { self._doDragEnd(e);});
       }, this.el);
     },
 
@@ -230,7 +230,7 @@
       e.preventDefault();
 
       var o = e.gesture.deltaX / -1000;
-      console.log(o);
+     // console.log(o);
 
       this.rotationAngle = Math.atan(o);
 

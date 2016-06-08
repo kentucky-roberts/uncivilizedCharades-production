@@ -1,4 +1,8 @@
  /** Background from http://www.transparenttextures.com/ **/
+cards--container {
+  width: 100%;
+  height: 650px;
+}
 
 td-cards {
   display: block;
@@ -49,7 +53,6 @@ td-card {
 
 }
 
-
 .cards-on-bottom {
     bottom: 0!important;
 }
@@ -91,6 +94,7 @@ td-card img {
   color: rgb(111, 250, 111);
   opacity: 0;
 }
+
 .no-text {
   position: absolute;
   top: 10px;
