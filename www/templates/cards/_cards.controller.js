@@ -1,0 +1,262 @@
+angular
+  .module('app')
+    .controller('CardsController', CardsController);
+
+CardsController.$inject = ['$scope', '$rootScope', '$window', '$interval', '$timeout', '$ionicModal', '$ionicLoading', '$http', '$ionicTabsDelegate', 'ionicToast', 'ngAudio', 'CardService', 'CountdownService', 'ModalService', 'DealerService', 'dataservice'];
+
+function CardsController($scope, $rootScope, $window, $interval, $timeout, $ionicModal, $ionicLoading, $http, $ionicTabsDelegate, ionicToast, ngAudio, CardService, CountdownService, ModalService, DealerService, dataservice) {
+
+
+ var cardTypes = [];
+
+
+
+	$scope.cards = {
+	    master: cardTypes,
+	    active: [],
+	    activeCard: [],
+	    discards: [],
+	};
+
+
+
+	$scope.playerCards = {};
+	$scope.activeCards = [];
+	$scope.cardsControl = {};
+
+
+
+    $scope.card_types = [];
+    $scope.phrases = [];
+    $scope.alt_phrases = [];
+
+    // activate();
+
+    function activate() {
+        return getCards().then(function() {
+          console.log("... returning cards", $scope.card_types);
+          //console.log($scope.phrases);
+          $scope.init($scope.phrases, $scope.alt_phrases);
+        });
+    }
+
+    function getCards() {
+        return dataservice.getCards()
+            .then(function(data) {
+                $scope.card_types = data;
+                console.log($scope.card_types);
+
+                $scope.card_types.forEach(function (phrase) {
+                  $scope.phrases.push(phrase);
+                  console.log("pushing phrase: " + phrase);
+                });
+
+                  $scope.card_types.forEach(function (alt_phrase) {
+                      $scope.alt_phrases.push(alt_phrase);
+                      console.log("pushing alt_phrase: " + alt_phrase);
+                  });
+                 return $scope.card_types;
+                console.log($scope.card_types);
+
+            });
+
+
+    }
+
+   var phrases = $scope.phrases;
+   var alt_phrases = $scope.alt_phraes;
+
+		$scope.init = function () {
+			//$scope.deck = CardService.newDeck(phrases, alt_phrases);
+			//console.log($scope.deck);
+		//	var newCards = $scope.deck;
+//console.log(newCards);
+			// $scope.cards.active.push(angular.extend({}, newCards));
+			// console.log($scope.cards.active.length);
+		}
+
+		//$scope.init();
+
+		$scope.cardDestroyed = function(index) {
+		  $scope.cards.master.splice(index, 1);
+		  console.log($scope.cards.master.length);
+		};
+
+
+	$scope.showAltPhrase = false;
+	$scope.togglePhrases = function () {
+		if ($scope.showAltPhrase === false) {
+			$scope.showAltPhrase = true;
+		} else  $scope.showAltPhrase = false;
+	};
+
+
+	$scope.deal = function() {
+		console.log("DEAL!");
+	    $scope.refreshCards();
+	    //$scope.activeCards = DealerService.dealThreeCards();
+	     var dealtCards = DealerService.dealer.deal();
+	     console.log(dealtCards);
+	    $scope.cards.active.push(angular.extend({}, dealtCards));
+	    $scope.addCard();
+	    $scope.addCard();
+	    $scope.addCard();
+	    $scope.cardsVisible = false;
+	};
+
+	$scope.addCard = function() {
+	    var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
+	    newCard.id = Math.random();
+	    $scope.cards.master.push(angular.extend({}, newCard));
+	};
+
+	$scope.refreshCards = function() {
+	    // Set $scope.cards to null so that directive reloads
+	    $scope.cardsVisible = false;
+	    //$scope.cards.active = null;
+	     Array.prototype.slice.call($scope.cards.master, 0);
+	     Array.prototype.slice.call($scope.cards.active, 0);
+	};
+
+	$scope.activateCard = function (index) {
+		console.log("activate card", index);
+		var cardToActivate = DealerService.deck.cards[index];
+      console.log(cardToActivate);
+      $scope.cards.splice(index, 1);
+      $scope.activeCard.push(cardToActivate)
+		$scope.newCountdown();
+	};
+
+	  $scope.newCountdown = function() {
+	    ModalService
+	      .init('templates/modals/countdown-timer.html', $scope)
+	      .then(function(modal) {
+	        modal.show();
+	      });
+	  };
+
+	$scope.cardSwipedLeft = function(index) {
+		console.log('LEFT SWIPE');
+	    //$scope.addCard();
+	   $scope.cardDestroyed(index);
+	};
+
+	$scope.cardSwipedRight = function(index) {
+	    console.log('RIGHT SWIPE');
+	    //$scope.addCard();
+	   $scope.cardDestroyed(index);
+	};
+
+	$scope.cardSwipedUp = function(index) {
+		console.log('UP SWIPE');
+	    //$scope.addCard();
+	   $scope.activateCard(index);
+	};
+
+	$scope.activateCard = function(index) {
+	    console.log("activeCard index: " + index);
+	    //$scope.cards.master.splice(index, 1);
+	    //$scope.cards.activeCard.push(angular.extend({}, index));
+	    console.log($scope.cards.activeCard);
+
+	    DealerService.activateCard(index);
+
+  		//var activeCard = CardService.activeCard(index);
+
+		CountdownService.setFalseTag();
+
+
+	    console.log(activeCard);
+	};
+
+
+	$scope.showActiveCardFace = function() {
+		$scope.activeCardFaceVisible = true;
+	};
+
+	// $scope.showActiveCard = function(index) {
+
+	// 	$scope.cards.activeCard
+
+	//     console.log($scope.cards.activeCard);
+
+	//     $("td-card").addClass("hidden");
+
+	//     		var activeCard = CardService.activeCard(index);
+
+	// 	CountdownService.setFalseTag();
+	//     console.log(activeCard);
+	// };
+
+
+
+	$scope.cardSwipedUp = function(index) {
+	    console.log('UP SWIPE');
+
+	    //$scope.activateCard(index);
+
+	    $scope.cardsVisible = false;
+	    $scope.activeCardVisible = false;
+	    $scope.activeCardFaceVisible = false;
+	};
+
+
+	$scope.stealPoint = function() {
+		$scope.cardsVisible = false;
+		$scope.activeCardVisible = true;
+		$scope.activeCardFaceVisible = false;
+		$("td-card").removeClass("hidden");
+	};
+
+	$scope.showActiveCardFace = function () {
+		$scope.cardsVisible = false;
+		$scope.activeCardVisible = true;
+		$scope.activeCardFaceVisible = true;
+	};
+
+	$scope.hideActiveCard = function () {
+		$scope.cardsVisible = false;
+		$scope.activeCardVisible = false;
+		$scope.activeCardFaceVisible = false;
+	};
+
+	$scope.nextHand = function() {
+
+		CountdownService.setTrueTag();
+		$scope.hideActiveCard();
+		//$scope.deActivateCard();
+		$scope.refreshCards();
+		// $scope.modal.close();
+	};
+
+	$scope.noPoint = function() {
+		$scope.deActivateCard();
+	};
+
+	$scope.deActivateCard = function(index) {
+	    $scope.cards.activeCard.splice(index, 1);
+	    		$scope.cardDestroyed(index);
+	    console.log($scope.cards.activeCard);
+	};
+
+
+	 ////    COUNTDOWN SERVICE    ////  todo....  make CountdownService.tags -> tags more descriptive name
+	  $scope.CountdownService = CountdownService;
+
+	  $scope.setFalseTag = function() {
+	      CountdownService.setFalseTag();
+	  };
+
+	  $scope.setTrueTag = function() {
+	      CountdownService.setTrueTag();
+	  };
+
+	  $scope.setTrueTag();
+
+	$scope.$on('removeCard', function(event, element, card) {
+	    var discarded = $scope.cards.master.splice($scope.cards.master.indexOf(card), 1);
+	    		$scope.cards.discards.push(discarded);
+	    		console.log($scope.cards.discards);
+	});
+}
+
