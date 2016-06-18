@@ -89,7 +89,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
                   });
 
                 //console.log(game.phrases);
-                return game.card_types;
+
             });
 
 
@@ -153,7 +153,6 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
         $scope.slides = [];
 
-
         game.canDeal = false;
         game.cardsVisible = false;
 
@@ -170,10 +169,6 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
         game.started  = false;
         game.over  = false;
         game.winner = [];
-
-
-
-
     };
 
 
@@ -191,7 +186,6 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
       $scope.initQuickStart();
     };
-
 
     $scope.initQuickStart = function() {
       // these control 'www/templates/game.html' each using ngf-if to show and hide outer-shell views
@@ -213,7 +207,6 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
       game.started  = true; /// init
       game.over  = false;
       game.quickStart = false;
-
 
       $scope.startGame(game.teams);
     };
@@ -252,15 +245,12 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
       $scope.firstStep = function() {
           game.step = 1;
-          game.playerCount = 0;
           $scope.step = game.step;
       };
 
       $scope.lastStep = function() {
             game.step -= 1;
             $scope.step = game.step;
-            game.playerCount -= 1;
-             $scope.activePlayer = game.players[game.step];
       };
 
       $scope.resetGame = function() {
@@ -274,6 +264,9 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
           game.quickStart = true;
           game.started  = false;
           game.over  = false;
+
+          game.teams = [];
+
 
           $scope.activePhrase = 0;
           $scope.activePlayer = 0;
@@ -293,7 +286,8 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
               $scope.soundChaChing();
               $scope.teamColor = "positive";
 
-            if (game.teams.team1.score >= 10 ) {
+            if (game.teams.team1.score >= game.maxScore ) {
+              console.log("team1's score: " + game.teams.team1.score);
                 game.endGame(game.teams.team1);
               } return;
             } else {
@@ -301,52 +295,18 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
                 $scope.soundChaChing();
                 $scope.teamColor = "assertive";
 
-          if (game.teams.team2.score >= 10 ) {
+          if (game.teams.team2.score >= game.maxScore ) {
+              console.log("team2's score: " + game.teams.team2.score);
               game.endGame(game.teams.team2);
           }
               return;
           }
       };
 
-      // game.addPointToActiveTeam = function() {
-
-      //   if (game.step % 2 === 0 && game.step != 1) {
-      //     //  Team1 is the active team so give them a point
-      //     //
-      //     //  var team1 = TeamService.newTeam();
-      //     //   var team2 = TeamService.newTeam();
-      //     //   team1.addPoint(1);
-      //     //
-      //     //    if (GameService.maxPoints === team1.points ) {
-      //     //      game.over = true;
-      //     //      game.started = false;
-      //     //      game.winningTeam = "Team1";
-      //     //
-      //     //    }
-      //   } else {
-      //     //    Team2 is the active team so give them a point
-      //     //
-      //     //  if (GameService.maxPoints === team2.points ) {
-      //     //      game.over = true;
-      //     //      game.started = false;
-      //     //      game.winningTeam = "Team1";
-      //     //
-      //     //    }
-      //   }
-
-
-
-      // };
-
-
       ////  THIS IS A PRODUCTION THING-A-MA-BOB  !!!!
       $scope.selectActiveTeam = function() {
 
           if (game.step % 2 === 0 && game.step !== 1) {
-
-              game.activeTeam = game.teams.team1;
-              console.log(game.activeTeam);
-              $scope.gameSlideActive = false;
 
               $scope.swapSlides = function() {
                   $timeout(function() {
@@ -355,14 +315,13 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
                       $scope.gameSlideActive = true;
                   }, 500);
               };
-
               $scope.swapSlides();
-              return;
-          } else {
-              game.activeTeam = game.teams.team2;
+              game.activeTeam = game.teams.team1;
               console.log(game.activeTeam);
               $scope.gameSlideActive = false;
 
+              return;
+          } else {
               $scope.swapSlides = function() {
                 $timeout(function() {
                    $scope.teamColor = "assertive";
@@ -371,9 +330,11 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
                 }, 500);
               };
               $scope.swapSlides();
+              game.activeTeam = game.teams.team2;
+              console.log(game.activeTeam);
+              $scope.gameSlideActive = false;
               return;
           } // if/else
-
       };
 
 
@@ -396,7 +357,6 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
           } else {
             console.log("guessedWrong");
           }
-
         $scope.closeModal();
       };
 
@@ -505,13 +465,14 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
             $("#activateCard").removeClass("hidden").addClass("show");
       };
 
-      game.activateCard = function() {
+      game.activateCard = function(index) {
           game.cardsVisible = false;
           game.canDeal = false;
           game.cardsDealt = false;
           game.cardFaceVisible = false;
 
-          //game.dealer.activateCard();
+          //game.dealer.activateCard(index);  // USING DUMMY INFO FOR NOW
+          console.log("ACTIVATING CARD");
 
           $("#activateCard").removeClass("show").addClass("hidden");
           $("#showCountdown").removeClass("hidden").addClass("show");
@@ -540,36 +501,13 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
           game.readyNextTurn();
       };
 
-      game.getTeamPoints = function(){
-         // Need to return:  game.team1Points, game.team2Points,
-
-         var team1Score = 0;
-         var team2Score = 0;
-
+      game.startBonusRound = function() {
+        console.log("start bonus round!");
       };
 
-      game.setTeam1Points = function(){
-          game.team1Points = 1;
-          game.team1.points = 1;
+      game.stealPoint = function(team) {
+        alert("game.stealPoint() called from GameController yo!");
       };
-
-      game.setTeam2Points = function(){
-          game.team2Points = 1;
-          game.team2.points = 1;
-      };
-
-
-  game.startBonusRound = function() {
-    console.log("start bonus round!");
-  };
-
-  game.stealPoint = function(team) {
-    alert("game.stealPoint() called from GameController yo!");
-
-
-
-  };
-
 
       game.showRefreshCards = function() {
           game.started = true;

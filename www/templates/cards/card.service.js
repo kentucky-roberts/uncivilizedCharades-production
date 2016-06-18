@@ -4,7 +4,8 @@ angular
     .factory('CardService', CardService);
 
 CardService.$inject = ['$timeout', '$http'];
-function CardService($timeout, $http){
+
+  function CardService($timeout, $http) {
 
     var service = {
         newDeck: newDeck,
@@ -21,7 +22,7 @@ function CardService($timeout, $http){
       var deck = this;
       this.cards = [];
       this.dealt = [];
-      // this.activeCard = [];
+      this.activeCard = [];
       this.phrases = phrases;
       this.alt_phrases = alt_phrases;
 //      console.log(this.alt_phrases);
@@ -38,27 +39,28 @@ function CardService($timeout, $http){
 
     }
 
-    Deck.prototype.phrases = function() {
-
+    Deck.prototype.phrases = function(phrases) {
         this.phrases = phrases;
+        console.log("phrases:" + phrases);
     };
 
-     Deck.prototype.alt_phrases = function() {
+     Deck.prototype.alt_phrases = function(alt_phrases) {
       this.alt_phrases = alt_phrases;
+      console.log(alt_phrases);
     };
 
-    // Deck.prototype.activateCard = function (index) {
-    //   var cardToActivate = this.dealt.slice(1, index);
-    //   if(angular.isDefined(cardToActivate)){
-    //         this.activeCard.push(cardToActivate);
-    //         //console.log(this.activeCard);
-    //         return cardToActivate;
-    //     }
-    //     else {
-    //         return false;
-    //     }
+    Deck.prototype.activateCard = function (index) {
+      var cardToActivate = this.dealt.slice(1, index);
+      if(angular.isDefined(cardToActivate)){
+            this.activeCard.push(cardToActivate);
+            //console.log(this.activeCard);
+            return cardToActivate;
+        }
+        else {
+            return false;
+        }
 
-    // };
+    };
 
     Deck.prototype.deal = function(){
         var cards = this.cards.slice(0, 3);
@@ -95,7 +97,7 @@ function CardService($timeout, $http){
     Deck.prototype.deal = function(){
       var card = this.cards.shift();
       this.dealt.push(card);
-      console.log(this.dealt);
+      console.log(this.card);
     };
 
 

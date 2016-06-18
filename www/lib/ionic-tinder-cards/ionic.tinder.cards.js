@@ -16,7 +16,7 @@
   var transitionKeys = ['webkitTransition', 'transition', '-webkit-transition', 'webkit-transition',
               '-moz-transition', 'moz-transition', 'MozTransition', 'mozTransition'];
   var TRANSITION = 'webkitTransition';
-  for(i = 0; i < transitionKeys.length; i++) {
+  for(var i = 0; i < transitionKeys.length; i++) {
     if(d.style[transitionKeys[i]] !== undefined) {
       TRANSITION = transitionKeys[i];
       break;
@@ -297,8 +297,8 @@
       compile: function(element, attr) {
         return function($scope, $element, $attr, swipeCards) {
           var el = $element[0];
-          // var leftText = el.querySelector('.no-text');
-          // var rightText = el.querySelector('.yes-text');
+          var leftText = el.querySelector('.no-text');
+          var rightText = el.querySelector('.yes-text');
 
           // Force hardware acceleration for animation - better performance on first touch
           el.style.transform = el.style.webkitTransform = 'translate3d(0px, 0px, 0px)';
@@ -306,19 +306,19 @@
           // Instantiate our card view
           var swipeableCard = new SwipeableCardView({
             el: el,
-            // leftText: leftText,
-            // rightText: rightText,
+            leftText: leftText,
+            rightText: rightText,
             onPartialSwipe: function(amt) {
               swipeCards.partial(amt);
               var self = this;
               $timeout(function() {
-                // if (amt < 0) {
-                //   self.leftText.style.opacity = fadeFn(-amt);
-                //   self.rightText.style.opacity = 0;
-                // } else {
-                //   self.leftText.style.opacity = 0;
-                //   self.rightText.style.opacity = fadeFn(amt);
-                // }
+                if (amt < 0) {
+                  self.leftText.style.opacity = fadeFn(-amt);
+                  self.rightText.style.opacity = 0;
+                } else {
+                  self.leftText.style.opacity = 0;
+                  self.rightText.style.opacity = fadeFn(amt);
+                }
                 $scope.onPartialSwipe({amt: amt});
               });
             },
@@ -358,8 +358,8 @@
               });
             },
             onSnapBack: function(startX, startY, startRotation) {
-              // var leftText = el.querySelector('.yes-text');
-              // var rightText = el.querySelector('.no-text');
+              var leftText = el.querySelector('.yes-text');
+              var rightText = el.querySelector('.no-text');
 
               var animation = collide.animation({
                 // 'linear|ease|ease-in|ease-out|ease-in-out|cubic-bezer(x1,y1,x2,y2)',
@@ -380,8 +380,8 @@
               .on('step', function(v) {
                 //Have the element spring over 400px
                 el.style.transform = el.style.webkitTransform = 'translate3d(' + (startX - startX*v) + 'px, ' + (startY - startY*v) + 'px, 0) rotate(' + (startRotation - startRotation*v) + 'rad)';
-                // rightText.style.opacity = 0;
-                // leftText.style.opacity = 0;
+                rightText.style.opacity = 0;
+                leftText.style.opacity = 0;
               })
               .start();
 
@@ -428,6 +428,7 @@
 
         this.partial = function(amt) {
           // Removed animation, too resource-consuming on Android.
+          console.log("This is a partial swipe");
         };
 
         this.registerCard = function(card) {
@@ -440,13 +441,10 @@
           var topCard = findTopCard();
           if (topCard) topCard.swipeRight();
         };
-
         $scope.internalControl.swipeLeft = function() {
           var topCard = findTopCard();
           if (topCard) topCard.swipeLeft();
         };
-
-
       }]
     };
   }]);

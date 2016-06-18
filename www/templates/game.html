@@ -5,14 +5,14 @@
     </ion-pane>
 
 
-<!--       <ion-pane  id="game__preflight" class="my-slide-animation" ng-if="!game.welcome && game.preflight && !game.started && !game.over">
+      <ion-pane  id="game__preflight" class="my-slide-animation" ng-if="!game.welcome && game.preflight && !game.started && !game.over">
               <div ng-include="'templates/game/game.preflight.html'"></div>
-      </ion-pane> -->
-<!--
+      </ion-pane>
+
       <ion-pane  id="game__quickStart" class="my-slide-animation" ng-if="!game.welcome && game.quickStart && !game.preflight && !game.started && !game.over">
               <div ng-include="'templates/game/game.quick-start.html'"></div>
       </ion-pane>
- -->
+
       <ion-pane  id="game" class="my-slide-animation" ng-if="!game.welcome && !game.preflight && game.started && !game.over">
             <!--   <h1>Game</h1> -->
               <div ng-include="'templates/game/game.html'"></div>
@@ -23,9 +23,6 @@
              <!-- <h1>Game Over</h1> -->
               <div ng-include="'templates/game/game.over.html'"></div>
       </ion-pane>
-
-
-
 
 
 </ion-view>

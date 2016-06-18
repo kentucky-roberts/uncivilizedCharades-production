@@ -5,36 +5,51 @@
 
     <div class="{{(game.canDeal === true || game.cardsDealt === true ) ? 'show' : 'hidden'}} ">
       <div>
-        <h1>Message here</h1>
         <ul>
-          <li ng-repeat="card in game.dealer.deck.dealt">{{card.phrase.phrase}}</li>
-        </ul>
+<!--           <li ng-repeat="card in game.dealer.deck.dealt">{{card.phrase.phrase}}</li>
+ -->
+<!--           <li ng-repeat="card in cards.active">card: {{card.phrase.phrase}}</li>
+ -->         </ul>
       </div>
 
+      <div class="cards--container">
+<div ng-controller="CardsController">
 
-      <div class="cards--container" ng-controller="CardsController">
-        <td-cards control="cardsControl">
-          <td-card ng-repeat="card in game.dealer.deck.dealt"
+      <td-cards control="cardsControl" ng-if="game.cardsVisible">
+
+        <td-card ng-repeat="card in cards.master track by $index"
             on-destroy="cardDestroyed($index)"
-            on-swipe-up="cardSwippedUp($index)"
-            on-double-tap="togglePhrase()"
-            on-transition-left="cardSwippedLeft($index)"
-            on-transition-right="cardSwippedRight($index)"
+            on-swipe-up="cardSwipedUp($index)"
+            on-double-tap="togglePhrases()"
+            on-transition-left="cardSwipedLeft($index)"
+            on-transition-right="cardSwipedRight($index)"
             on-partial-swipe="cardPartialSwipe(amt)"
-            class="card card-{$index} {{(game.cardFaceVisible === true) ? 'card-face' : 'card-back' }}">
+            class="card-{{$index}} {{ (game.cardFaceVisible == true) ? 'card-face' : 'card-back' }}" >
 
-              <h1 class="td--phrase {{(game.cardFaceVisible === true && showAltPhrase === false) ? 'show' : 'hidden'}}">
-                {{card.phrase.phrase}}
-              </h1>
-              <h1 class="td--alt-phrase {{(game.cardFaceVisible === true && showAltPhrase === true) ? 'show' : 'hidden'}}">
-                {{card.alt_phrase.alt_phrase}}
-              </h1>
+          <div class="image" ng-controller="CardController">
 
-          </td-card>
-        </td-cards>
+            <h1 class="td--phrase {{ (game.cardFaceVisible == true && showAltPhrase == false) ? 'show' : 'hidden' }}">{{card.phrase}}</h1>
+
+            <h1 class="td--alt-phrase {{ (game.cardFaceVisible == true  && showAltPhrase == true) ? 'show' : 'hidden' }}">{{card.alt_phrase}}</h1>
+
+
+             <button  ng-click="activateCard($index)" class="hidden button button-calm {{ (game.cardFaceVisible == true) ? 'show' : 'hidden' }}">Select this Card!</button>
+
+             <button  ng-click="togglePhrases()" class="hidden button button-calm button-outline {{ (game.cardFaceVisible == true) ? 'show' : 'hidden' }}">Toggle Phrases</button>
+
+            <div class="hidden no-text">NOPE</div>
+            <div class="hidden yes-text">LIKE</div>
+          </div>
+        </td-card>
+
+        <div class="empty" ng-if="!cards.master.length">
+          <button ng-click="deal();" class="button button-outline button-positive">Deal</button>
+        </div>
+
+      </td-cards>
+    </div>
       </div>
     </div>
-
 
     <div class="fixed__outside--top">
       <div class="row">

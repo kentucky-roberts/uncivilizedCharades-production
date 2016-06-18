@@ -132,9 +132,11 @@
      */
     snapBack: function() {
       this.onSnapBack(this.x, this.y, this.rotationAngle);
+      console.log("snapping back...");
     },
 
     isUnderThreshold: function() {
+      console.log("is under isUnderThreshold!");
       //return true;
       return Math.abs(this.thresholdAmount) < 0.4;
     },
@@ -161,6 +163,7 @@
         targetX = (this.parentWidth / 2) + (this.width);
       } else {
         targetX = - (this.parentWidth + this.width);
+        console.log("targetX");
       }
 
       // Target Y is just the "opposite" side of the triangle of targetX as the adjacent edge (sohcahtoa yo)
@@ -175,6 +178,7 @@
       ionic.onGesture('dragstart', function(e) {
 
         var cx = window.innerWidth / 2;
+        console.log(cx);
         if(e.gesture.touches[0].pageX < cx) {
           self._transformOriginRight();
         } else {
@@ -230,7 +234,7 @@
       e.preventDefault();
 
       var o = e.gesture.deltaX / -1000;
-     // console.log(o);
+      console.log(o);
 
       this.rotationAngle = Math.atan(o);
 
@@ -292,8 +296,8 @@ angular.module('ionic.contrib.ui.tinderCards', ['ionic'])
         onSnapBack: '&',
         onDestroy: '&'
       },
-//      link: function($scope, $element, $attr, swipeCards) {
-  //      var el = $element[0];
+     link: function($scope, $element, $attr, swipeCards) {
+       var el = $element[0];
       compile: function(element, attr) {
         return function($scope, $element, $attr, tdCards) {
           var el = $element[0];
@@ -414,11 +418,11 @@ angular.module('ionic.contrib.ui.tinderCards', ['ionic'])
                 $scope.onSnapBack();
               });
 
-              /*
+
               animateSpringViaCss(el, 0, 0.5, 50, 700, 10, function (x) {
                 return el.style.transform = el.style.webkitTransform = 'translate3d(' + x + 'px,0,0)';
               });
-              */
+
             },
         });
         $scope.$parent.tdCard = swipeableCard;

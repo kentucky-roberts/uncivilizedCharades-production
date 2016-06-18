@@ -2,33 +2,86 @@ angular
   .module('app')
     .controller('CardsController', CardsController);
 
-CardsController.$inject = ['$scope', '$rootScope',  '$window', '$interval', '$timeout', '$ionicModal', '$ionicLoading', '$http', '$ionicTabsDelegate', 'ionicToast', 'ngAudio', 'CardService', 'CountdownService', 'ModalService'];
+CardsController.$inject = ['$scope', '$rootScope', '$window', '$interval', '$timeout', '$ionicModal', '$ionicLoading', '$http', '$ionicTabsDelegate', 'ionicToast', 'ngAudio', 'CardService', 'CountdownService', 'ModalService', 'DealerService', 'dataservice'];
 
-function CardsController($scope, $rootScope, $window, $interval, $timeout, $ionicModal, $ionicLoading, $http, $ionicTabsDelegate, ionicToast, ngAudio, CardService, CountdownService, ModalService) {
+function CardsController($scope, $rootScope, $window, $interval, $timeout, $ionicModal, $ionicLoading, $http, $ionicTabsDelegate, ionicToast, ngAudio, CardService, CountdownService, ModalService, DealerService, dataservice) {
 
-  	// var cardTypes = CardService.all();
-  	// var threeCards = CardService.threeCards();
+
+ var cardTypes = [];
+
+
 
 	$scope.cards = {
-	    master: [],
+	    master: cardTypes,
 	    active: [],
 	    activeCard: [],
 	    discards: [],
 	};
 
+
+
 	$scope.playerCards = {};
 	$scope.activeCards = [];
 	$scope.cardsControl = {};
 
-	$scope.cardDestroyed = function(index) {
-		console.log("$scope.cardDestroyed(index) was called here" + $scope.cards.master.length );
-	$scope.cards.master.splice(index, 1);  // Remove a card from ->  $scope.cards.master
 
-	// var recycledCard = $scope.cards.master[index];
-	// console.log(recycledCard);
-	//     $scope.cards.master.push(angular.extend({}, recycledCard));
 
-	};
+    $scope.card_types = [];
+    $scope.phrases = [];
+    $scope.alt_phrases = [];
+
+    // activate();
+
+    function activate() {
+        return getCards().then(function() {
+          console.log("... returning cards", $scope.card_types);
+          //console.log($scope.phrases);
+          $scope.init($scope.phrases, $scope.alt_phrases);
+        });
+    }
+
+    function getCards() {
+        return dataservice.getCards()
+            .then(function(data) {
+                $scope.card_types = data;
+                console.log($scope.card_types);
+
+                $scope.card_types.forEach(function (phrase) {
+                  $scope.phrases.push(phrase);
+                  console.log("pushing phrase: " + phrase);
+                });
+
+                  $scope.card_types.forEach(function (alt_phrase) {
+                      $scope.alt_phrases.push(alt_phrase);
+                      console.log("pushing alt_phrase: " + alt_phrase);
+                  });
+                 return $scope.card_types;
+                console.log($scope.card_types);
+
+            });
+
+
+    }
+
+   var phrases = $scope.phrases;
+   var alt_phrases = $scope.alt_phraes;
+
+		$scope.init = function () {
+			//$scope.deck = CardService.newDeck(phrases, alt_phrases);
+			//console.log($scope.deck);
+		//	var newCards = $scope.deck;
+//console.log(newCards);
+			// $scope.cards.active.push(angular.extend({}, newCards));
+			// console.log($scope.cards.active.length);
+		}
+
+		//$scope.init();
+
+		$scope.cardDestroyed = function(index) {
+		  $scope.cards.master.splice(index, 1);
+		  console.log($scope.cards.master.length);
+		};
+
 
 	$scope.showAltPhrase = false;
 	$scope.togglePhrases = function () {
@@ -42,11 +95,12 @@ function CardsController($scope, $rootScope, $window, $interval, $timeout, $ioni
 		console.log("DEAL!");
 	    $scope.refreshCards();
 	    //$scope.activeCards = DealerService.dealThreeCards();
-	    // var dealtCards = threeCards ;
-	    // // $scope.cards.active.push(angular.extend({}, dealtCards));
-	    // $scope.addCard();
-	    // $scope.addCard();
-	    // $scope.addCard();
+	     var dealtCards = DealerService.dealer.deal();
+	     console.log(dealtCards);
+	    $scope.cards.active.push(angular.extend({}, dealtCards));
+	    $scope.addCard();
+	    $scope.addCard();
+	    $scope.addCard();
 	    $scope.cardsVisible = false;
 	};
 
@@ -62,35 +116,50 @@ function CardsController($scope, $rootScope, $window, $interval, $timeout, $ioni
 	    //$scope.cards.active = null;
 	     Array.prototype.slice.call($scope.cards.master, 0);
 	     Array.prototype.slice.call($scope.cards.active, 0);
-
 	};
 
+	$scope.activateCard = function (index) {
+		console.log("activate card", index);
+		var cardToActivate = DealerService.deck.cards[index];
+      console.log(cardToActivate);
+      $scope.cards.splice(index, 1);
+      $scope.activeCard.push(cardToActivate)
+		$scope.newCountdown();
+	};
 
-	  // $scope.newCountdown = function() {
-	  //   ModalService
-	  //     .init('templates/modals/countdown-timer.html', $scope)
-	  //     .then(function(modal) {
-	  //       modal.show();
-	  //     });
-	  // };
+	  $scope.newCountdown = function() {
+	    ModalService
+	      .init('templates/modals/countdown-timer.html', $scope)
+	      .then(function(modal) {
+	        modal.show();
+	      });
+	  };
 
 	$scope.cardSwipedLeft = function(index) {
 		console.log('LEFT SWIPE');
-	    $scope.addCard();
+	    //$scope.addCard();
 	   $scope.cardDestroyed(index);
 	};
 
 	$scope.cardSwipedRight = function(index) {
 	    console.log('RIGHT SWIPE');
-	    $scope.addCard();
+	    //$scope.addCard();
 	   $scope.cardDestroyed(index);
+	};
+
+	$scope.cardSwipedUp = function(index) {
+		console.log('UP SWIPE');
+	    //$scope.addCard();
+	   $scope.activateCard(index);
 	};
 
 	$scope.activateCard = function(index) {
 	    console.log("activeCard index: " + index);
-	    $scope.cards.master.splice(index, 1);
-	    $scope.cards.activeCard.push(angular.extend({}, index));
+	    //$scope.cards.master.splice(index, 1);
+	    //$scope.cards.activeCard.push(angular.extend({}, index));
 	    console.log($scope.cards.activeCard);
+
+	    DealerService.activateCard(index);
 
   		//var activeCard = CardService.activeCard(index);
 
@@ -190,3 +259,4 @@ function CardsController($scope, $rootScope, $window, $interval, $timeout, $ioni
 	    		console.log($scope.cards.discards);
 	});
 }
+
