@@ -14,6 +14,7 @@ angular
         'ionic-toast',
         //'ion-fab-button',
         'angular-svg-round-progress',
+        //'ionic.contrib.ui.tinderCards',
         'ionic.contrib.ui.tinderCards',
         'angular-logger'
     ])

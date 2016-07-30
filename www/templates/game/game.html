@@ -1,37 +1,27 @@
 
-<ion-content class="{{teamCss}}" ng-if="game.started">
+<ion-content class="{{teamCss}}">
   <div class="game__slide  {{teamCss}} slide-right-to-left" ng-if="gameSlideActive">
 
 
     <div class="{{(game.canDeal === true || game.cardsDealt === true ) ? 'show' : 'hidden'}} ">
-      <div>
-        <ul>
-<!--           <li ng-repeat="card in game.dealer.deck.dealt">{{card.phrase.phrase}}</li>
- -->
-<!--           <li ng-repeat="card in cards.active">card: {{card.phrase.phrase}}</li>
- -->         </ul>
-      </div>
 
-      <div class="cards--container">
-<div ng-controller="CardsController">
-
+    <div ng-controller="CardsController">
       <td-cards control="cardsControl" ng-if="game.cardsVisible">
-
-        <td-card ng-repeat="card in cards.master track by $index"
+        <td-card ng-repeat="card in cards.master"
             on-destroy="cardDestroyed($index)"
             on-swipe-up="cardSwipedUp($index)"
             on-double-tap="togglePhrases()"
             on-transition-left="cardSwipedLeft($index)"
             on-transition-right="cardSwipedRight($index)"
             on-partial-swipe="cardPartialSwipe(amt)"
-            class="card-{{$index}} {{ (game.cardFaceVisible == true) ? 'card-face' : 'card-back' }}" >
+            class="card-{{$index}} {{ (game.cardFaceVisible === true) ? 'card-face' : 'card-back' }}" >
 
           <div class="image" ng-controller="CardController">
 
-            <h1 class="td--phrase {{ (game.cardFaceVisible == true && showAltPhrase == false) ? 'show' : 'hidden' }}">{{card.phrase}}</h1>
+            <h1 class="td--phrase {{ (game.cardFaceVisible === true && showAltPhrase === false) ? 'show' : 'hidden' }}">{{card.phrase}}</h1>
 
-            <h1 class="td--alt-phrase {{ (game.cardFaceVisible == true  && showAltPhrase == true) ? 'show' : 'hidden' }}">{{card.alt_phrase}}</h1>
-
+            <h1 class="td--phrase {{ (game.cardFaceVisible === true  && showAltPhrase === true) ? 'show' : 'hidden' }}">{{card.alt_phrase}}HI</h1>
+            <h3 style="color:black;">{{$index}}</h3>
 
              <button  ng-click="activateCard($index)" class="hidden button button-calm {{ (game.cardFaceVisible == true) ? 'show' : 'hidden' }}">Select this Card!</button>
 
@@ -43,12 +33,14 @@
         </td-card>
 
         <div class="empty" ng-if="!cards.master.length">
-          <button ng-click="deal();" class="button button-outline button-positive">Deal</button>
+          <button ng-click="game.deal();deal();" class="button button-outline button-positive">Reload</button>
         </div>
 
       </td-cards>
     </div>
-      </div>
+
+
+
     </div>
 
     <div class="fixed__outside--top">

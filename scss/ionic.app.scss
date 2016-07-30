@@ -1311,54 +1311,6 @@ code {
   margin: 45px 0 35px;
 }
 
-div.content-box {
-    clear: both;
-}
-
-div.content-box div.content-box-info {
-    padding-left: 115px;
-}
-
-div.content-box.big {
-  padding:0 7% 30px;
-  border-radius: 3px;
-  background:#fff;
-  -webkit-transition: background .5s ease-in-out;
-    -moz-transition: background .5s ease-in-out;
-    -o-transition: background .5s ease-in-out;
-    -ms-transition: background .5s ease-in-out;
-    transition: background .5s ease-in-out;
-}
-
-
-div.content-box.big .ch-info-wrap {
-  margin: -42px auto 35px;
-  position:relative;
-  left:auto;
-  top:auto;
-}
-
-div.content-box.big:hover {
-  background: #fafafa;
-}
-
-div.content-box.big div.content-box-info {
-    padding-left: 0;
-  text-align:center;
-  margin:25px 0 0;
-}
-
-div.content-box.big div.content-box-info p {
-  text-align:center;
-  margin-top: 25px;
-}
-
-.service-reasons div.content-box.big {
-  transition:none;
-  margin-top: 30px;
-  border: 1px solid #fff;
-}
-
 .main-content h3 {
     color: #666;
     line-height: 32px;
@@ -1428,47 +1380,6 @@ a.prev.disabled,a.next.disabled {
     border-radius: 100%;
     border: 2px solid #aaa;
     background-size: cover;
-}
-
-
-.our-clients h3.title:after, .service-reasons h3.title:after {
-    background: none;
-}
-
-.our-clients h3.title, .service-reasons h3.title {
-    color: #fff;
-}
-
-.our-clients, .service-reasons {
-  background-color: transparent;
-  /*background-image: url("http://wendysmithteam.com/images/uploads/bg/img-bg-blur.jpg"); */
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-clip: border-box;
-  background-origin: padding-box;
-  margin-top: 0px;
-  margin-right: auto;
-  margin-bottom: 0px;
-  margin-left: auto;
-  padding-top: 50px;
-  padding-right: 0px;
-  padding-bottom: 50px;
-  padding-left: 0px;
-  background-position: center center;
-  background-size: cover;
-}
-
-.client, .service-reasons {
-    overflow: hidden;
-}
-
-.our-clients .carousel-controls {
-    display: block;
-    height: 25px;
-    position: absolute;
-    right: 0;
-    top: 3px;
-    width: 83px;
 }
 
 .main-menu {

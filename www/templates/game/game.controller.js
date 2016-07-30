@@ -68,7 +68,8 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
         return getCards().then(function() {
           console.log("... returning cards", game.card_types);
           //console.log(game.phrases);
-          game.init(game.phrases, game.alt_phrases);
+          var cards = game.card_types;
+          game.init(cards);
         });
     }
 
@@ -78,15 +79,15 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
                 game.card_types = data;
                 console.log(game.card_types);
 
-                game.card_types.forEach(function (phrase) {
-                  game.phrases.push(phrase);
-                  console.log("pushing phrase: " + phrase);
-                });
+                // game.card_types.forEach(function (phrase) {
+                //   game.phrases.push(phrase);
+                //   console.log("pushing phrase: " + phrase);
+                // });
 
-                  game.card_types.forEach(function (alt_phrase) {
-                      game.alt_phrases.push(alt_phrase);
-                      console.log("pushing alt_phrase: " + alt_phrase);
-                  });
+                //   game.card_types.forEach(function (alt_phrase) {
+                //       game.alt_phrases.push(alt_phrase);
+                //       console.log("pushing alt_phrase: " + alt_phrase);
+                //   });
 
                 //console.log(game.phrases);
 
@@ -95,19 +96,26 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
     }
 
-   var phrases = game.phrases;
-   var alt_phrases = game.alt_phraes;
 
-    game.init = function (phrases, alt_phrases) {
-      console.log("game.init was called: ", phrases, alt_phrases);
+    game.init = function (cards) {
+      console.log("game.init was called: ", cards);
 
-      game.phrases = phrases;  // FIX THIS
-      game.alt_phrases = alt_phrases;
+      // game.phrases = phrases;  // FIX THIS
+      // //console.log("phrase: " , phrases);
+      // game.alt_phrases = alt_phrases;
       game.maxScore = GameService.maxScore();
       game.secondsRemaining = GameService.maxTime();
 
-      game.deck = CardService.newDeck(phrases, alt_phrases);  // create a deck of cards and pass it into the game
-      console.log(game.deck);
+      game.deck = CardService.newDeck(cards);  // create a deck of cards and pass it into the game
+      //console.log(game.deck);
+      //console.log(game.deck.cards);
+
+
+
+
+
+
+
       //
       //
       /**
@@ -124,8 +132,8 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
        *
        */
 
-        game.dealer = DealerService.newDealer(game.deck);  //  now create a dealer pass him to game and give the dealer out new game deck of cards
-        console.log(game.dealer.deck.cards[0]);
+        // game.dealer = DealerService.newDealer(game.deck);  //  now create a dealer pass him to game and give the dealer out new game deck of cards
+        //console.log(game.dealer.deck.cards[0]);
 
         game.team1 = TeamService.newTeam("Team1", 0);  // make a team
         game.team2 = TeamService.newTeam("Team2", 0);  // make another team
@@ -148,7 +156,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
          * game.teams.team1.changeScore(anountToChange);
          *
          */
-        console.log("... created game.teams" + game.teams.team1.teamName + game.teams.team2.teamName);
+        //console.log("... created game.teams" + game.teams.team1.teamName + game.teams.team2.teamName);
 
 
         $scope.slides = [];
@@ -441,7 +449,8 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
       game.deal = function () {
 
-            game.dealer.deal();
+            var dealtCards = game.dealer.deal();
+            console.log(dealtCards);
 
             game.canDeal = true;
             game.dealerVisible = false;

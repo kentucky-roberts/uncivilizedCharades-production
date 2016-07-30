@@ -1,59 +1,58 @@
 
 angular
   .module('app')
-    .factory('CardService', CardService);
+  .factory('CardService', CardService);
 
 CardService.$inject = ['$timeout', '$http'];
 
-  function CardService($timeout, $http) {
-
+function CardService($timeout, $http) {
     var service = {
         newDeck: newDeck,
         Deck: Deck,
         Card: Card
     };
 
-    function newDeck(phrases, alt_phrases){
-        var deck = new Deck(phrases, alt_phrases);
-        return deck;
+    function newDeck (cards){
+      var deck = new Deck(cards);
+      return deck;
     }
 
-    function Deck(phrases, alt_phrases) {
+    function Deck(cards) {
       var deck = this;
-      this.cards = [];
-      this.dealt = [];
-      this.activeCard = [];
-      this.phrases = phrases;
-      this.alt_phrases = alt_phrases;
-//      console.log(this.alt_phrases);
+      this.cards = cards;
+      console.log(this.cards);
 
+      // deck.cards.phrases.forEach(function(phrase) {
+      //   deck.cards.alt_phrases.forEach(function(alt_phrase){
+      //     var card = new Card(phrase, alt_phrase);
+      //       deck.cards.push(card);
+      //   });
+      // });
 
-      deck.phrases.forEach(function (phrase) {
-        deck.alt_phrases.forEach(function(alt_phrase){
-          var card = new Card(phrase, alt_phrase);
-          deck.cards.push(card);
-        });
-      });
-
-      deck.shuffle(deck.cards);
+      //deck.shuffle(deck.cards);
+      //console.log(deck.cards);
+      var cards = this.cards;
+      deck.init(cards);
 
     }
 
-    Deck.prototype.phrases = function(phrases) {
-        this.phrases = phrases;
-        console.log("phrases:" + phrases);
+
+
+    Deck.prototype.init = function (cards) {
+      this.cards = cards;
+      this.shuffle(cards);
+      console.log("cards: ", this.cards);
     };
 
-     Deck.prototype.alt_phrases = function(alt_phrases) {
-      this.alt_phrases = alt_phrases;
-      console.log(alt_phrases);
-    };
+
 
     Deck.prototype.activateCard = function (index) {
+
       var cardToActivate = this.dealt.slice(1, index);
+
       if(angular.isDefined(cardToActivate)){
             this.activeCard.push(cardToActivate);
-            //console.log(this.activeCard);
+            console.log(this.activeCard);
             return cardToActivate;
         }
         else {
@@ -62,17 +61,32 @@ CardService.$inject = ['$timeout', '$http'];
 
     };
 
-    Deck.prototype.deal = function(){
-        var cards = this.cards.slice(0, 3);
-        console.log(cards);
-        if(angular.isDefined(cards)){
-            this.dealt.push(cards);
-            return cards;
-        }
-        else {
-            return false;
-        }
-    };
+    // Deck.prototype.deal = function(){
+    //   var card = this.cards.shift();
+    //   this.dealt.push(card);
+    //   console.log(this.card);
+    // };
+
+    // Deck.prototype.clearCards = function(){
+    //   var card = this.cards.shift();
+    //   this.dealt.push(card);
+    //   console.log(this.card);
+    // };
+
+
+    // Deck.prototype.deal = function(){
+
+    //     var cards = this.cards.slice(0, 3);
+
+    //     if(angular.isDefined(cards)){
+    //         this.dealt.push(cards);
+    //         console.log(this.dealt);
+    //         return cards;
+    //     }
+    //     else {
+    //         return false;
+    //     }
+    // };
 
     Deck.prototype.shuffle = function(cards){
       this.cards = cards;
@@ -91,14 +105,11 @@ CardService.$inject = ['$timeout', '$http'];
     Deck.prototype.reset = function () {
       this.cards = this.cards.concat(this.dealt);
       this.dealt = [];
+      this.discards = [];
       this.shuffle();
     };
 
-    Deck.prototype.deal = function(){
-      var card = this.cards.shift();
-      this.dealt.push(card);
-      console.log(this.card);
-    };
+
 
 
     function Card (phrase, alt_phrase){
@@ -122,4 +133,6 @@ CardService.$inject = ['$timeout', '$http'];
 // game.deck.card.name();
 // game.deck.shuffle(cards);
 // game.deck.deal();
+// game.deck.clearCards();
+// game.deck.activateCard(index);
 // game.deck.reset();
