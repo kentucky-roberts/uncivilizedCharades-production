@@ -105,7 +105,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
       // game.alt_phrases = alt_phrases;
       game.maxScore = GameService.maxScore();
       game.secondsRemaining = GameService.maxTime();
-
+      game.cc = 0;
       game.deck = CardService.newDeck(cards);  // create a deck of cards and pass it into the game
       //console.log(game.deck);
       //console.log(game.deck.cards);
@@ -132,7 +132,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
        *
        */
 
-        // game.dealer = DealerService.newDealer(game.deck);  //  now create a dealer pass him to game and give the dealer out new game deck of cards
+        game.dealer = DealerService.newDealer(game.deck);  //  now create a dealer pass him to game and give the dealer out new game deck of cards
         //console.log(game.dealer.deck.cards[0]);
 
         game.team1 = TeamService.newTeam("Team1", 0);  // make a team
@@ -262,27 +262,27 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
       };
 
       $scope.resetGame = function() {
-          game.step = 0;
+          game.step = -1;
+          game.cc = 0;  //game.cardCount
           $scope.gameStarted = false;
           $scope.gameOver = false;
           $scope.step = game.step;
 
+          game.winningTeam = [];
+          game.teams.team1.score = 0;
+          game.teams.team2.score = 0;
+
           game.welcome = false;
           game.preflight  = false;
-          game.quickStart = true;
-          game.started  = false;
+          game.started  = true; /// init
           game.over  = false;
+          game.quickStart = false;
+          var teams = game.teams;
 
-          game.teams = [];
+          $scope.startQuickStart();
+          console.log(game.step);
+          //game.teams = [];
 
-
-          $scope.activePhrase = 0;
-          $scope.activePlayer = 0;
-          $scope.team1Score = 0;
-          $scope.team2Score = 0;
-          $scope.winningTeam = null;
-          $scope.teamColor = null;
-          $scope.teamCss = null;
       };
 
 
@@ -325,6 +325,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
               };
               $scope.swapSlides();
               game.activeTeam = game.teams.team1;
+
               console.log(game.activeTeam);
               $scope.gameSlideActive = false;
 
@@ -384,7 +385,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
       // Called each time the slide changes
       $scope.slideChanged = function (index) {
         $scope.slideIndex = index;
-        //console.log("slideChanged: " + index);
+      console.log("slideChanged: " + index);
       };
 
 
@@ -446,47 +447,104 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
       };
 
 
-
       game.deal = function () {
+        game.dealer.dealt = [];
+        game.cc = 0;  //game.cardCount
+        game.canDeal = true;
+        game.dealerVisible = false;
+        game.cardsDealt = true;
+        game.cardsVisible = true;
+        game.cardFaceVisible = false;
+        console.log("GOING BACK TO INIT TO USE CARDSERVICE.  PICK BACK UP HERE");
 
-            var dealtCards = game.dealer.deal();
-            console.log(dealtCards);
+        var dealtCards = game.dealer.deal();
+        console.log("dealtCards: " , dealtCards);
 
-            game.canDeal = true;
-            game.dealerVisible = false;
-            game.cardsDealt = true;
-            game.cardsVisible = true;
+        // game.dealer.dealt.push(angular.extend({}, dealtCards));
+        // console.log(game.dealer.dealt[0]);
 
-            console.log("GOING BACK TO INIT TO USE CARDSERVICE.  PICK BACK UP HERE");
 
-            $("#dealer").removeClass("show").addClass("hidden");
-            $("#dealerDeal").removeClass("show").addClass("hidden");
-            $("#showCards").removeClass("hidden").addClass("show");
+        $("#dealer").removeClass("show").addClass("hidden");
+        $("#dealerDeal").removeClass("show").addClass("hidden");
+        $("#showCards").removeClass("hidden").addClass("show");
       };
 
       game.showCards = function(){
-            game.canDeal = true;
-            game.cardsVisible = true;
-            game.cardsDealt = true;
-            game.cardFaceVisible = true;
+        game.canDeal = true;
+        game.cardsVisible = true;
+        game.cardsDealt = true;
+        game.cardFaceVisible = true;
 
-            $("#showCards").removeClass("show").addClass("hidden");
-            $("#activateCard").removeClass("hidden").addClass("show");
+        $("#showCards").removeClass("show").addClass("hidden");
+        $("#activateCard").removeClass("hidden").addClass("show");
+      };
+
+      game.showAltPhrase = false;
+
+      game.togglePhrases = function () {
+        console.log(game.showAltPhrase);
+        if (game.showAltPhrase === false) {
+          game.showAltPhrase = true;
+        } else  game.showAltPhrase = false;
       };
 
       game.activateCard = function(index) {
-          game.cardsVisible = false;
-          game.canDeal = false;
-          game.cardsDealt = false;
-          game.cardFaceVisible = false;
+        console.log("ACTIVATING CARD with index: ", index);
+        var ix = index;
+        console.log(ix);
+        game.cardsVisible = false;
+        game.canDeal = false;
+        game.cardsDealt = false;
+        game.cardFaceVisible = false;
 
-          //game.dealer.activateCard(index);  // USING DUMMY INFO FOR NOW
-          console.log("ACTIVATING CARD");
 
-          $("#activateCard").removeClass("show").addClass("hidden");
-          $("#showCountdown").removeClass("hidden").addClass("show");
+
+        // var activeCardIndex = game.dealer.dealt[game.cc];
+        // console.log(activeCardIndex);
+        game.activeCard = game.dealer.activateCard(ix);
+        game.ac = game.dealer.activeCard;
+        console.log(game.ac);
+
+        $("#activateCard").removeClass("show").addClass("hidden");
+        $("#showCountdown").removeClass("hidden").addClass("show");
+
          game.showCountdown();
       };
+
+
+      game.nextCard = function() {
+        console.log("Next card!");
+        if (game.cc == 2) { //end of array -> start from over from beginning
+          game.cc = 0;
+        } else {
+          game.cc ++;
+        }
+      }
+      game.lastCard = function() {
+        console.log("Last card");
+        if (game.cc <= 0) {  // beginning of array -> start over from end
+          game.cc = 2;
+        } else {
+          game.cc --;
+        }
+      }
+
+      game.cardSwipedUp = function(index){
+        console.log("SWIPE UP");
+        game.activateCard(index);
+        // start countdown
+        //
+      }
+
+      game.cardSwipedRight = function(){
+        console.log("swipe right!");
+        game.nextCard();
+      }
+
+      game.cardSwipedLeft = function(){
+        console.log("swipe left!!!!");
+        game.lastCard();
+      }
 
       game.showCountdown = function() {
           game.cardsVisible = false;
@@ -510,6 +568,13 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
           game.readyNextTurn();
       };
 
+      game.cancelSuccessModal = function(){
+        console.log("success has been canceled.  that means either active team THOUGHT they guess the phrase correctly and DID NOT, or they hit the GOT IT button by accent and would like to continue their contdown");
+        $scope.closeModal();
+        $scope.resumeCountdown();
+        //$scope.startTimer();  doing this in the modal's resume countdown button
+      }
+
       game.startBonusRound = function() {
         console.log("start bonus round!");
       };
@@ -525,7 +590,9 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
       };
 
 
-
+      game.showMainMenu = function(){
+        console.log("show main menu screen");
+      }
 
   ////////////////////////////////////////
   // ModalService
@@ -556,6 +623,14 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
   };
 
   $scope.newCountdown = function() {
+    ModalService
+      .init('templates/modals/countdown-timer.html', $scope)
+      .then(function(modal) {
+        modal.show();
+      });
+  };
+
+  $scope.resumeCountdown = function() {
     ModalService
       .init('templates/modals/countdown-timer.html', $scope)
       .then(function(modal) {

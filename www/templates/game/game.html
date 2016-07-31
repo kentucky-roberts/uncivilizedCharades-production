@@ -1,47 +1,5 @@
-
 <ion-content class="{{teamCss}}">
   <div class="game__slide  {{teamCss}} slide-right-to-left" ng-if="gameSlideActive">
-
-
-    <div class="{{(game.canDeal === true || game.cardsDealt === true ) ? 'show' : 'hidden'}} ">
-
-    <div ng-controller="CardsController">
-      <td-cards control="cardsControl" ng-if="game.cardsVisible">
-        <td-card ng-repeat="card in cards.master"
-            on-destroy="cardDestroyed($index)"
-            on-swipe-up="cardSwipedUp($index)"
-            on-double-tap="togglePhrases()"
-            on-transition-left="cardSwipedLeft($index)"
-            on-transition-right="cardSwipedRight($index)"
-            on-partial-swipe="cardPartialSwipe(amt)"
-            class="card-{{$index}} {{ (game.cardFaceVisible === true) ? 'card-face' : 'card-back' }}" >
-
-          <div class="image" ng-controller="CardController">
-
-            <h1 class="td--phrase {{ (game.cardFaceVisible === true && showAltPhrase === false) ? 'show' : 'hidden' }}">{{card.phrase}}</h1>
-
-            <h1 class="td--phrase {{ (game.cardFaceVisible === true  && showAltPhrase === true) ? 'show' : 'hidden' }}">{{card.alt_phrase}}HI</h1>
-            <h3 style="color:black;">{{$index}}</h3>
-
-             <button  ng-click="activateCard($index)" class="hidden button button-calm {{ (game.cardFaceVisible == true) ? 'show' : 'hidden' }}">Select this Card!</button>
-
-             <button  ng-click="togglePhrases()" class="hidden button button-calm button-outline {{ (game.cardFaceVisible == true) ? 'show' : 'hidden' }}">Toggle Phrases</button>
-
-            <div class="hidden no-text">NOPE</div>
-            <div class="hidden yes-text">LIKE</div>
-          </div>
-        </td-card>
-
-        <div class="empty" ng-if="!cards.master.length">
-          <button ng-click="game.deal();deal();" class="button button-outline button-positive">Reload</button>
-        </div>
-
-      </td-cards>
-    </div>
-
-
-
-    </div>
 
     <div class="fixed__outside--top">
       <div class="row">
@@ -64,6 +22,29 @@
         <h1>{{game.activeTeam.teamName || 'Active Team Name'}}</h1>
       </div>
 
+      <!-- place cards between these lines -->
+      <div class="{{(game.canDeal === true || game.cardsDealt === true ) ? 'show' : 'hidden'}} ">
+        <section class="td-cards" ng-if="game.cardsVisible">
+          <div ng-repeat="card in game.dealer.dealt"
+              on-destroy="cardDestroyed($index)"
+              on-swipe-up="game.cardSwipedUp(game.cc)"
+              on-double-tap="game.togglePhrases()"
+              on-swipe-left="game.cardSwipedLeft($index)"
+              on-swipe-right="game.cardSwipedRight($index)"
+              on-partial-swipe="cardPartialSwipe(amt)"
+              class="card card-{{$index}} {{ (game.cardFaceVisible === true) ? 'card-face' : 'card-back' }}" >
+              <h1 class="td--phrase {{(game.cardFaceVisible == true && game.showAltPhrase == false) ? 'hidden' : 'show' }}">{{card[game.cc].phrase}}</h1>
+              <h1 class="td--phrase {{(game.cardFaceVisible == true && game.showAltPhrase == false) ? 'show' : 'hidden' }}">{{card[game.cc].alt_phrase}}</h1>
+              <!-- <button  ng-click="game.activateCard($index)" class="button button-assertive button-xsmall">Activate</button> -->
+          </div>
+          <!-- <div class="hidden empty" ng-if="!cards.master.length">
+            <button  ng-click="game.lastCard()" class="button button-default button-xsmall ">Last Card</button>
+            <button  ng-click="game.nextCard()" class="button button-primary button-xsmall">Next Card</button>
+            <button  ng-click="game.togglePhrases()" class="button button-calm button-xsmall">Toggle Phrases</button>
+          </div> -->
+        </section>
+      </div>
+      <!-- place cards between these lines -->
 
     </div><!-- /.fixed__outside--top -->
 
@@ -73,7 +54,6 @@
             <div id="dealer" class="show">
                 <h3 class="instruction-test">Push button to deal cards</h3>
                 <button class="deal-cards button button-energized button-large" ng-click="game.deal();deal();">Deal Cards</button>
-                <button class="deal-cards button button-energized button-large" ng-click="game.endGame(Team1);">end game</button>
             </div>
             <div id="showCards" class="hidden">
                 <h3 class="instruction-test">Push button to show cards</h3>

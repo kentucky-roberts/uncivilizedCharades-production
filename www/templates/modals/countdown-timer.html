@@ -18,9 +18,18 @@
                     </div>
                 </div>
 
-                <div ng-if="started && !done">
+                <div ng-if="started && !done ">
                     <div class="progress">
                         {{humanizeDurationTimer(timer,'s')}}
+                    </div>
+                </div>
+
+                <div ng-if="!started && paused && !done ">
+                    <div class="progress">
+                        <div class="paused-time">
+                            <small>Paused</small><br>
+                            {{humanizeDurationTimer(timer,'s')}}
+                        </div>
                     </div>
                 </div>
 
@@ -30,7 +39,7 @@
                     clockwise="false"
                     rounded="true"
                     responsive="true"
-                    color="#26bb65"
+                    color="#26bb65 "
                     bgcolor="#eaeaea"
                     stroke="10"
                     animation="easeInOutBack"
@@ -57,11 +66,25 @@
                   </div>
                 </div>
 
-                <div ng-if="started && !done">
-                        <button class="button button-balanced button-block" ng-click="modal.hide();stopTimer(true);showSuccess();">
-                            Got it!
-                        </button>
-                </div>
+                <div class="fixed__outside--bottom">
+                  <div class="row center-block">
+                     <div class="col">
+                        <div ng-if="started && !done">
+                            <!-- <button class="button button-balanced button-block" ng-click="modal.hide();stopTimer(true);showSuccess();"> -->
+                            <button class="button button-balanced button-outlined button-large button-block" ng-click="modal.hide();pauseTimer(true);showSuccess();">
+                                Got it!
+                            </button>
+                        </div>
+
+                        <div ng-if="!started && paused && !done">
+                            <button class="button button-assertive button-outline button-large button-block" ng-click="startTimer();">
+                                Resume
+                            </button>
+                        </div>
+                     </div>
+                  </div>
+                </div><!--bottom -->
+
             </div>
         </ion-content>
     </ion-modal-view>

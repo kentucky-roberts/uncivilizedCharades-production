@@ -46,41 +46,56 @@ function DealerService ($timeout, $q, GameService, CardService, TeamService) {
         // };
 
         // pushCards(cards);
-
+        var dealtCards = dealer.dealt;
+        return dealtCards;
     };
 
-    dealer.getDealtCards = function(){
-      var dealtCards = dealer.dealt;
-      return dealtCards;
+    dealer.readyNextHand = function() {
+      console.log("readyNextHand you dealer!");
+
+      // dealer.deck.cards;
+      // dealer.deck.activeCard;
+      // dealer.deck.dealt;
+      // dealer.deck.discards;
+      dealer.dealt = [];
+      dealer.activeCard = [];
+
     }
 
     dealer.activateCard = function (index) {
-      var cardToActivate = dealer.deck.cards[index];
-      console.log(cardToActivate);
-      dealer.deck.cards.splice(index, 1);
-      dealer.deck.activeCard.push(cardToActivate)
+      var activeIndex = index;
+      console.log(activeIndex);
+
+      // console.log(dealer.dealt);
+      // var cardToActivate = dealer.dealt[0][activeIndex];
+      // console.log(cardToActivate);
+
+
+
+      // var cardToActivate = dealer.deck.dealt[index];
+      // console.log(cardToActivate);
+      //dealer.deck.cards.splice(index, 1);
+
+
+
+
+      var ac = dealer.dealt[0].splice(activeIndex, 1);
+      console.log(ac);
+
+      dealer.activeCard.push(ac);
+      console.log(dealer.activeCard);
+
+      var dc = dealer.dealt[0];
+      //console.log(dc);
+      dealer.discards.push(dc);
+      //console.log(dealer.discards);
+
+      dealer.dealt = [];  // clear out for next hand
+      console.log(dealer.dealt);
+
+      //dealer.readyNextHand();  // dont do this yet because it kills message used success message
+      dealer.callback();
     };
-
-    // dealer.hit = function () {
-    //   var card = dealer.deck.deal();
-    //   console.log(card);
-    //   dealer.deck.dealt.push(card);
-    //   dealer.callback();
-    // };
-
-
-    // Deck.prototype.deal = function(){
-    //   var card = this.cards.shift();
-    //   this.dealt.push(card);
-    //   console.log(this.card);
-    // };
-
-    // Deck.prototype.clearCards = function(){
-    //   var card = this.cards.shift();
-    //   this.dealt.push(card);
-    //   console.log(this.card);
-    // };
-
 
 
     dealer.callback = function () {

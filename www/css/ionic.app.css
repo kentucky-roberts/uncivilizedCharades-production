@@ -11072,7 +11072,7 @@ td-cards {
   height: 180px;
   border-radius: 10px; }
 
-td-card {
+td-card, .td-card {
   position: absolute;
   top: 0;
   left: 0;
@@ -11088,10 +11088,10 @@ td-card {
   padding: 25px 15px; }
 
 .card {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 315px;
+  position: relative;
+  margin: 0 auto;
+  min-width: 315px;
+  width: 70%;
   height: 180px;
   -webkit-transform: scale(1, 1);
   box-sizing: border-box;
@@ -11110,21 +11110,21 @@ td-card {
 .cards-on-bottom {
   bottom: 0 !important; }
 
-td-card.card-0 {
+td-card.card-0, .td-card.card-0 {
   -webkit-transform: translate3d(0, 0px, 0);
   transform: translate3d(0, 0px, 0);
   z-index: 10;
   transform: translate3d(0, 0, -180px);
   transform-style: preserve-3d; }
 
-td-card.card-1 {
+td-card.card-1, td-card.card-1 {
   -webkit-transform: translate3d(0, 4px, 0);
   transform: translate3d(0, 4px, 0);
   z-index: 9;
   transform: translate3d(0, 0, -180px);
   transform-style: preserve-3d; }
 
-td-card.card-2 {
+td-card.card-2, td-card.card-2 {
   -webkit-transform: translate3d(0, 8px, 0);
   transform: translate3d(0, 8px, 0);
   z-index: 8; }
@@ -11433,6 +11433,12 @@ h2.active-team {
   color: rgba(255, 255, 255, 0.8);
   text-shadow: rgba(255, 255, 255, 0.08) 0 1px 0; }
 
+.team1 .fixed__outside--top {
+  color: #000000; }
+
+.team2 .fixed__outside--top {
+  color: #ffffff; }
+
 .fixed__outside--top {
   position: absolute;
   top: 0.5em;
@@ -11578,25 +11584,128 @@ span.instruction-text {
   color: rgba(255, 255, 255, 0.8);
   text-shadow: rgba(255, 255, 255, 0.08) 0 1px 0; }
 
-h2.success--title {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-weight: 600;
-  color: #ffffff;
-  font-size: 32px;
-  line-height: 36px;
-  margin-top: 50px; }
+.success-modal-wrapper {
+  padding: 0 15px; }
+  .success-modal-wrapper h1.success--title {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 800;
+    color: #ffffff;
+    font-size: 40px;
+    line-height: 40px;
+    margin-top: 0; }
+  .success-modal-wrapper h2.success--title {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 32px;
+    line-height: 36px;
+    margin-top: 25px; }
+  .success-modal-wrapper h3.success--title {
+    color: #ffffff;
+    font-family: "Shadows Into Light Two", cursive;
+    font-size: 32px;
+    text-align: center;
+    margin: 15px auto 35px;
+    letter-spacing: 2px; }
+  .success-modal-wrapper p.success-message {
+    text-align: center;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 0 15px; }
+  .success-modal-wrapper .cancel-button {
+    margin-top: 35px; }
+  .success-modal-wrapper .continue-button {
+    margin-top: 15px;
+    border: 2px solid white; }
 
-h3.success--title {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-weight: 600;
-  color: #ffffff;
-  font-size: 50px; }
+/* success-modal-wrapper */
+/* started using this in success-modal */
+.top-section {
+  margin-top: -15px; }
 
-p.success-message {
+.paused-message {
+  color: red;
+  font-size: 18px;
   text-align: center;
+  margin: 0 auto; }
+
+.paused-time {
+  color: red; }
+
+.error-modal-wrapper {
+  background-color: #ef473a;
+  color: #121212;
+  padding: 0 15px; }
+  .error-modal-wrapper h1.error--title {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 800;
+    color: #ffffff;
+    font-size: 40px;
+    line-height: 40px;
+    margin-top: 0; }
+  .error-modal-wrapper h2.error--title {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 32px;
+    line-height: 36px;
+    margin-top: 25px; }
+  .error-modal-wrapper h3.error--title {
+    color: #ffffff;
+    font-family: "Shadows Into Light Two", cursive;
+    font-size: 32px;
+    text-align: center;
+    margin: 15px auto 35px;
+    letter-spacing: 2px; }
+  .error-modal-wrapper p.error-message {
+    text-align: center;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 0 15px;
+    maegin-top: 35px; }
+  .error-modal-wrapper .continue-button {
+    margin-top: 15px;
+    border: 2px solid #ffffff; }
+
+/* error-modal-wrapper */
+.game-over-wrapper {
+  background-color: black;
   color: #ffffff;
-  font-size: 16px;
-  padding: 15px; }
+  padding: 0;
+  text-align: center;
+  margin: 10px 0;
+  height: 100%; }
+  .game-over-wrapper h1.title {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 800;
+    color: #ffffff;
+    font-size: 40px;
+    line-height: 40px;
+    margin-top: 0;
+    padding: 35px 0; }
+  .game-over-wrapper h2.title {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 32px;
+    line-height: 36px;
+    margin-top: 25px; }
+  .game-over-wrapper h3.title {
+    color: #ffffff;
+    font-family: "Shadows Into Light Two", cursive;
+    font-size: 32px;
+    text-align: center;
+    margin: 15px auto 35px;
+    letter-spacing: 2px; }
+  .game-over-wrapper p.message {
+    text-align: center;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 0 15px;
+    maegin: 35px auto; }
+  .game-over-wrapper .continue-button {
+    margin: 15px auto;
+    border: 2px solid #ffffff; }
 
 .player-avatar {
   width: 75px;
@@ -11791,6 +11900,12 @@ img.img--center {
   margin-right: auto;
   margin-left: auto; }
 
+/*
+*
+** Team 1 Styles
+*
+*
+*/
 .bg-team1 {
   background-color: #121212 !important; }
   .bg-team1 .pane {
@@ -11799,6 +11914,10 @@ img.img--center {
     background-color: #121212 !important; }
   .bg-team1 span {
     color: #ffffff !important; }
+  .bg-team1 #team1__score strong {
+    color: #fc0 !important; }
+  .bg-team1 #team2__score strong {
+    color: white !important; }
   .bg-team1 h1 {
     color: #ffffff !important;
     margin-top: 0;
@@ -11812,17 +11931,29 @@ img.img--center {
   .bg-team1 p {
     color: #ffffff !important; }
 
+/*
+*
+** Team 2 Styles
+*
+*
+*/
 .bg-team2 {
   background-color: #ffffff !important; }
   .bg-team2 .pane {
     background-color: #ffffff !important; }
-  .bg-team2 .team__scores {
-    color: #121212; }
   .bg-team2 ion-pane {
     background-color: #444444 !important;
     color: #121212; }
   .bg-team2 span {
     color: #121212 !important; }
+  .bg-team2 #team1__score {
+    color: black; }
+    .bg-team2 #team1__score strong {
+      color: black !important; }
+  .bg-team2 #team2__score {
+    color: black; }
+    .bg-team2 #team2__score strong {
+      color: #fc0 !important; }
   .bg-team2 h1 {
     color: #121212 !important;
     margin-top: 0;
@@ -11840,6 +11971,12 @@ img.img--center {
   .bg-team2 span {
     color: #121212 !important; }
 
+/*
+*
+** Success Modal
+*
+*
+*/
 .bg-success {
   background-color: #ffc900;
   padding-top: 45px; }
@@ -12043,7 +12180,7 @@ a.editable-click:hover {
   color: #121212; }
 
 .bg-game-over {
-  background-color: #333;
+  background-color: black;
   color: #fb292d; }
 
 i {

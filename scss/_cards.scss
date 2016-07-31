@@ -14,7 +14,7 @@ td-cards {
   border-radius: 10px;
 }
 
-td-card {
+td-card, .td-card {
   position: absolute;
   top: 0;
   left:  0;
@@ -31,10 +31,10 @@ td-card {
 }
 
 .card {
-  position: absolute;
-  bottom: 0;
-  left:  0;
-  width: 315px;
+  position: relative;
+  margin: 0 auto;
+  min-width: 315px;
+  width: 70%;
   height: 180px;
   -webkit-transform: scale(1,1);
   box-sizing: border-box;
@@ -57,21 +57,21 @@ td-card {
     bottom: 0!important;
 }
 
-td-card.card-0 {
+td-card.card-0, .td-card.card-0 {
   -webkit-transform: translate3d(0, 0px, 0);
   transform: translate3d(0, 0px, 0);
   z-index: 10;
   transform: translate3d(0, 0, -180px);
   transform-style: preserve-3d;
 }
-td-card.card-1 {
+td-card.card-1, td-card.card-1 {
   -webkit-transform: translate3d(0, 4px, 0);
   transform: translate3d(0, 4px, 0);
   z-index: 9;
   transform: translate3d(0, 0, -180px);
   transform-style: preserve-3d;
 }
-td-card.card-2 {
+td-card.card-2, td-card.card-2 {
   -webkit-transform: translate3d(0, 8px, 0);
   transform: translate3d(0, 8px, 0);
   z-index: 8;

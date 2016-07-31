@@ -187,6 +187,18 @@ h2.active-team {
   text-shadow: rgba(255, 255, 255, 0.08) 0 1px 0;
 }
 
+.team1 {
+  .fixed__outside--top {
+    color: #000000;
+  }
+}
+
+.team2 {
+  .fixed__outside--top {
+    color: #ffffff;
+  }
+}
+
 .fixed__outside--top {
   position: absolute;
   top: 0.5em;
@@ -205,7 +217,6 @@ h2.active-team {
     min-height:  100px;
     height: 100%;
     text-align: center;
-   // background-color: pink;
     z-index: 10;
 }
 
@@ -366,28 +377,180 @@ span.instruction-text {
   text-shadow: rgba(255, 255, 255, 0.08) 0 1px 0;
 }
 
-h2.success--title {
-    font-family: $font-family-helvetica;
-    font-weight: 600;
-    color: #ffffff;
-    font-size: 32px;
-    line-height: 36px;
-    margin-top: 50px;
+.success-modal-wrapper {
+  padding: 0 15px;
+
+    h1.success--title {
+      font-family: "Open Sans", sans-serif;
+      font-weight: 800;
+      color: #ffffff;
+      font-size: 40px;
+      line-height: 40px;
+      margin-top: 0;
+    }
+
+    h2.success--title {
+      font-family: $font-family-helvetica;
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 32px;
+      line-height: 36px;
+      margin-top: 25px;
+    }
+
+    h3.success--title {
+      color: #ffffff;
+      font-family: $brand-font-family-hand-writing;
+      font-size: 32px;
+      text-align: center;
+      margin: 15px auto 35px;
+      letter-spacing: 2px;
+    }
+
+    p.success-message {
+      text-align: center;
+      color: $brand-color-light;
+      font-size: 16px;
+      padding: 0 15px;
+    }
+
+    .cancel-button {
+      margin-top: 35px;
+    }
+
+    .continue-button {
+      margin-top: 15px;
+      border: 2px solid white;
+    }
+}
+/* success-modal-wrapper */
+
+/* started using this in success-modal */
+.top-section {
+  margin-top: -15px;
 }
 
-h3.success--title {
-    font-family: $font-family-helvetica;
-    font-weight: 600;
-    color: #ffffff;
-    font-size: 50px;
+.middle-section {
+
 }
 
-p.success-message {
+.bottom-section {
+
+}
+
+.paused-message {
+  color: red;
+  font-size: 18px;
   text-align: center;
-  color: $brand-color-light;
-  font-size: 16px;
-  padding: 15px;
+  margin: 0 auto;
 }
+
+.paused-time {
+  color: red;
+}
+
+
+.error-modal-wrapper {
+  background-color: $brand-color-error;
+  color: $brand-color-dark;
+  padding: 0 15px;
+
+    h1.error--title {
+      font-family: "Open Sans", sans-serif;
+      font-weight: 800;
+      color: #ffffff;
+      font-size: 40px;
+      line-height: 40px;
+      margin-top: 0;
+    }
+
+    h2.error--title {
+      font-family: $font-family-helvetica;
+      font-weight: 600;
+      color: $brand-color-light;
+      font-size: 32px;
+      line-height: 36px;
+      margin-top: 25px;
+    }
+
+    h3.error--title {
+      color: #ffffff;
+      font-family: $brand-font-family-hand-writing;
+      font-size: 32px;
+      text-align: center;
+      margin: 15px auto 35px;
+      letter-spacing: 2px;
+    }
+
+    p.error-message {
+      text-align: center;
+      color: $brand-color-light;
+      font-size: 16px;
+      padding: 0 15px;
+      maegin-top: 35px;
+    }
+
+    .continue-button {
+      margin-top: 15px;
+      border: 2px solid $brand-color-light;
+    }
+}
+/* error-modal-wrapper */
+
+
+.game-over-wrapper {
+
+    background-color: black;
+    color: $brand-color-light;
+
+    padding: 0;
+    text-align: center;
+    margin: 10px 0;
+    height: 100%;
+
+
+    h1.title {
+      font-family: "Open Sans", sans-serif;
+      font-weight: 800;
+      color: #ffffff;
+      font-size: 40px;
+      line-height: 40px;
+      margin-top: 0;
+      padding: 35px 0;
+    }
+
+    h2.title {
+      font-family: $font-family-helvetica;
+      font-weight: 600;
+      color: $brand-color-light;
+      font-size: 32px;
+      line-height: 36px;
+      margin-top: 25px;
+    }
+
+    h3.title {
+      color: #ffffff;
+      font-family: $brand-font-family-hand-writing;
+      font-size: 32px;
+      text-align: center;
+      margin: 15px auto 35px;
+      letter-spacing: 2px;
+    }
+
+    p.message {
+      text-align: center;
+      color: $brand-color-light;
+      font-size: 16px;
+      padding: 0 15px;
+      maegin: 35px auto;
+    }
+
+    .continue-button {
+      margin: 15px auto;
+      border: 2px solid $brand-color-light;
+    }
+}
+
 
 .player-avatar {
     width: 75px;
@@ -668,9 +831,15 @@ img.img--center {
   margin-left: auto;
 }
 
+
+/*
+*
+** Team 1 Styles
+*
+*
+*/
 .bg-team1 {
  background-color:  $brand-color-dark!important;
-
 
   .pane {
    background-color:  $brand-color-dark!important;
@@ -682,6 +851,18 @@ img.img--center {
 
   span {
     color: $brand-color-light!important;
+  }
+
+  #team1__score {
+    strong {
+      color: $brand-yellow!important;
+    }
+  }
+
+  #team2__score {
+    strong {
+      color: white!important;
+    }
   }
 
   h1 {
@@ -703,27 +884,42 @@ img.img--center {
   }
 }
 
+
+
+/*
+*
+** Team 2 Styles
+*
+*
+*/
 .bg-team2 {
  background-color:  $brand-color-light!important;
 
+  .pane {
+     background-color:  $brand-color-light!important;
+  }
 
-    .pane {
-       background-color:  $brand-color-light!important;
-
-    }
-
-
-    .team__scores {
-      color: $brand-color-dark;
-    }
-
-    ion-pane {
-     background-color:  $brand-color-gray!important;
-     color: $brand-color-dark;
-    }
+  ion-pane {
+   background-color:  $brand-color-gray!important;
+   color: $brand-color-dark;
+  }
 
   span {
     color: $brand-color-dark!important;
+  }
+
+  #team1__score {
+    color: black;
+    strong {
+      color: black!important;
+    }
+  }
+
+  #team2__score {
+    color: black;
+    strong {
+      color: $brand-yellow!important;
+    }
   }
 
   h1 {
@@ -739,20 +935,28 @@ img.img--center {
      margin-top: 0;
      margin-bottom:0;
   }
+
   h3 {
-     color: $brand-color-dark!important;
+    color: $brand-color-dark!important;
   }
 
   p {
-      color: $brand-color-dark!important;
+    color: $brand-color-dark!important;
   }
 
-    span {
-      color: $brand-color-dark!important;
+  span {
+    color: $brand-color-dark!important;
   }
 
 }
 
+
+/*
+*
+** Success Modal
+*
+*
+*/
 .bg-success {
   background-color: $brand-color-success;
   padding-top: 45px;
@@ -1009,7 +1213,7 @@ a.editable-click:hover {
 }
 
 .bg-game-over {
-  background-color: $brand-bg-dark;
+  background-color: black;
   color: $brand-red;
 }
 

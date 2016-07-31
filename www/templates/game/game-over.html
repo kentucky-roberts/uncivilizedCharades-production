@@ -1,9 +1,26 @@
-<h1>{{winningTeam || "Winning Team"}}</h1>
-  <a href="#"><i class="ion-trophy icon-winner bigIcon" style="font-size: 200px;"></i> </a>
-  <h2>
-      We have a winner!
-  </h2>
-      <button class="button button-large button-outline button-stable lead" ng-click="resetGame();">play again?</button>
-      <div class="fixed-outside-bottom">
+<ion-content class="game-over-wrapper">
 
-  </div>
+  <div class="top-section">
+    <h1 class="title"> Game Over</h1>
+    <p class="lead text--center"><strong>We Have A Winner! </strong></p>
+  </div><!--fixed-outside-bottom -->
+
+  <div class="middle-section" style="margin-top:25px;display:block;">
+    <div class="center-block">
+      <i class="ion-trophy bigIcon" style="font-size: 200px;"></i>
+      <h3 class="title">Congratulations!  <strong>{{game.winner.teamName || 'Winning Team Name'}}</strong></h3>
+    </div>
+  </div><!--fixed-outside-bottom -->
+
+  <div class="bottom-section">
+    <div class="row center-block">
+       <div class="col">
+          <button class="button continue-button button-light button-outline icon ion-checkmark text--white button-large" ng-click="resetGame();"> Play Again </button>
+          <br>
+          <button class="button cancel-button button-light button-clear text--white" ng-click="game.showMainMenu();"> Main Menu </button>
+       </div>
+    </div>
+  </div><!--fixed-outside-bottom -->
+
+</ion-content>
+
