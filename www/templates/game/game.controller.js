@@ -277,7 +277,6 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
           game.started  = true; /// init
           game.over  = false;
           game.quickStart = false;
-          var teams = game.teams;
 
           $scope.startQuickStart();
           console.log(game.step);
@@ -294,21 +293,21 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
               $scope.soundChaChing();
               $scope.teamColor = "positive";
 
-            if (game.teams.team1.score >= game.maxScore ) {
+          if (game.teams.team1.score >= game.maxScore ) {
               console.log("team1's score: " + game.teams.team1.score);
-                game.endGame(game.teams.team1);
-              } return;
-            } else {
-                game.teams.team2.addPoint();
-                $scope.soundChaChing();
-                $scope.teamColor = "assertive";
+              game.endGame(game.teams.team1);
+            } return;
+          } else {
+              game.teams.team2.addPoint();
+              $scope.soundChaChing();
+              $scope.teamColor = "assertive";
 
-          if (game.teams.team2.score >= game.maxScore ) {
-              console.log("team2's score: " + game.teams.team2.score);
-              game.endGame(game.teams.team2);
-          }
-              return;
-          }
+        if (game.teams.team2.score >= game.maxScore ) {
+            console.log("team2's score: " + game.teams.team2.score);
+            game.endGame(game.teams.team2);
+        }
+          return;
+        }
       };
 
       ////  THIS IS A PRODUCTION THING-A-MA-BOB  !!!!
@@ -427,25 +426,28 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
       };
 
       game.initLoop = function() {
+          game.cardFaceVisible = false;
+          game.showAltPhrase = false;
           $("#dealer").removeClass("hidden").addClass("show");
           $("#dealerDeal").removeClass("hidden").addClass("show");
       };
 
       game.showDealer = function() {
-            game.started = true;
-            game.canDeal = false;
-            game.showResults = false;
-            game.dealerVisible = true;
-            game.cardsDealt = false;
-            game.cardsVisible = false;
-            $("#dealer").removeClass("hidden").addClass("show");
+        game.started = true;
+        game.canDeal = false;
+        game.showResults = false;
+        game.dealerVisible = true;
+        game.cardsDealt = false;
+        game.cardsVisible = false;
+        game.cardFaceVisible = false;
+        game.showAltPhrase = false;
+        $("#dealer").removeClass("hidden").addClass("show");
       };
 
       game.hideDealer = function () {
-            $("#dealer").removeClass("show").addClass("hidden");
-            $("#dealerDeal").removeClass("show").addClass("hidden");
+        $("#dealer").removeClass("show").addClass("hidden");
+        $("#dealerDeal").removeClass("show").addClass("hidden");
       };
-
 
       game.deal = function () {
         game.dealer.dealt = [];
@@ -455,7 +457,10 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
         game.cardsDealt = true;
         game.cardsVisible = true;
         game.cardFaceVisible = false;
+        game.showAltPhrase = false;
         console.log("GOING BACK TO INIT TO USE CARDSERVICE.  PICK BACK UP HERE");
+
+       // game.shuffleCards();  /// CURRENTLY WORKING ON THIS LITTLE TURKEY
 
         var dealtCards = game.dealer.deal();
         console.log("dealtCards: " , dealtCards);
@@ -469,17 +474,23 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
         $("#showCards").removeClass("hidden").addClass("show");
       };
 
+      game.shuffleCards = function(){
+        var cd = game.deck;
+        console.log("current deck: ", cd);
+        var nd = CardService.newDeck(cd);
+        console.log("new deck: ", nd);
+      }
+
       game.showCards = function(){
         game.canDeal = true;
         game.cardsVisible = true;
         game.cardsDealt = true;
         game.cardFaceVisible = true;
+        game.showAltPhrase = false;
 
         $("#showCards").removeClass("show").addClass("hidden");
         $("#activateCard").removeClass("hidden").addClass("show");
       };
-
-      game.showAltPhrase = false;
 
       game.togglePhrases = function () {
         console.log(game.showAltPhrase);
@@ -530,20 +541,20 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
       }
 
       game.cardSwipedUp = function(index){
-        console.log("SWIPE UP");
+        //console.log("SWIPE UP");
         game.activateCard(index);
         // start countdown
         //
       }
 
       game.cardSwipedRight = function(){
-        console.log("swipe right!");
-        game.nextCard();
+        //console.log("swipe right!");
+        game.lastCard();
       }
 
       game.cardSwipedLeft = function(){
-        console.log("swipe left!!!!");
-        game.lastCard();
+       // console.log("swipe left!!!!");
+         game.nextCard();
       }
 
       game.showCountdown = function() {
@@ -572,7 +583,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
         console.log("success has been canceled.  that means either active team THOUGHT they guess the phrase correctly and DID NOT, or they hit the GOT IT button by accent and would like to continue their contdown");
         $scope.closeModal();
         $scope.resumeCountdown();
-        //$scope.startTimer();  doing this in the modal's resume countdown button
+        //$scope.startTimer();$scope.closeModal();  doing this in the modal's resume countdown button
       }
 
       game.startBonusRound = function() {

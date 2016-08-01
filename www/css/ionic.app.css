@@ -9545,8 +9545,8 @@ a.button {
   position: relative;
   z-index: 2;
   display: block;
-  margin: -1px;
-  padding: 16px;
+  margin: 10px auto 0;
+  padding: 0;
   font-size: 16px; }
 
 .item-content {
@@ -11414,6 +11414,18 @@ h3 {
   font-size: 22px;
   text-align: center; }
 
+h3.card-count {
+  margin-top: 15px;
+  margin-bottom: 40px; }
+
+h3.small {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 20px;
+  text-align: center; }
+
 h2.active-team {
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
@@ -11491,6 +11503,9 @@ h2.active-team {
 .text--white {
   color: white !important; }
 
+.text--red {
+  color: red !important; }
+
 p.text--pre-title {
   margin: 45px auto 5px auto;
   text-align: center; }
@@ -11547,6 +11562,14 @@ h3.instruction-text {
   font-weight: 600;
   font-size: 22px;
   line-height: 22px;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: rgba(255, 255, 255, 0.08) 0 1px 0; }
+
+h3.instruction-text--small {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
   color: rgba(255, 255, 255, 0.8);
   text-shadow: rgba(255, 255, 255, 0.08) 0 1px 0; }
 
@@ -11915,7 +11938,7 @@ img.img--center {
   .bg-team1 span {
     color: #ffffff !important; }
   .bg-team1 #team1__score strong {
-    color: #fc0 !important; }
+    color: white !important; }
   .bg-team1 #team2__score strong {
     color: white !important; }
   .bg-team1 h1 {
@@ -11953,7 +11976,7 @@ img.img--center {
   .bg-team2 #team2__score {
     color: black; }
     .bg-team2 #team2__score strong {
-      color: #fc0 !important; }
+      color: black !important; }
   .bg-team2 h1 {
     color: #121212 !important;
     margin-top: 0;
@@ -12330,12 +12353,6 @@ h1.td--alt-phrase {
   margin: 2e5px auto; }
 
 .td--button {
-  position: absolute;
-  bottom: 5%;
-  width: 100%;
-  text-align: center; }
-
-.td-button {
   position: absolute;
   bottom: 5%;
   width: 100%;

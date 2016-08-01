@@ -1,20 +1,22 @@
-    <div class="modal">
+<div class="modal">
     <ion-modal-view>
-        <ion-header-bar class="hidden bar bar-header bar-dark">
-            <h1 class="title">Act out your phrase!</h1>
-            <button class="hidden button button-clear button-primary" ng-click="modal.hide();stopTimer(true);">Cancel</button>
-        </ion-header-bar>
         <ion-content class="padding">
 
             <div class="progress-wrapper bg-brand-dark">
 
                 <div ng-if="!started && !paused && !done">
+                    <h3><strong>Card selected!</strong></h3>
+                </div>
+
+                <div ng-if="started && !paused && !done">
+                    <h3><strong>Act out your card's phrase</strong></h3>
+                </div>
+
+                <div ng-if="!started && !paused && !done">
                    <div class="fixed__outside--center">
-
                         <div class="start__countdown__container">
-                                <button class="button-start-countdown button button-balanced button-outline button-fab icon ion-power" ng-click="startTimer()"></button>
+                            <button class="button-start-countdown button button-balanced button-outline button-fab icon ion-power" ng-click="startTimer()"></button>
                         </div>
-
                     </div>
                 </div>
 
@@ -71,7 +73,7 @@
                      <div class="col">
                         <div ng-if="started && !done">
                             <!-- <button class="button button-balanced button-block" ng-click="modal.hide();stopTimer(true);showSuccess();"> -->
-                            <button class="button button-balanced button-outlined button-large button-block" ng-click="modal.hide();pauseTimer(true);showSuccess();">
+                            <button class="button button-balanced button-outlined button-large button-block" ng-click="modal.hide();stopTimer(true);showSuccess();">
                                 Got it!
                             </button>
                         </div>

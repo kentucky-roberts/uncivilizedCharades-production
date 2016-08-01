@@ -24,18 +24,23 @@
 
       <!-- place cards between these lines -->
       <div class="{{(game.canDeal === true || game.cardsDealt === true ) ? 'show' : 'hidden'}} ">
+
+        <h3 class="card-count small"><strong>{{game.cc + 1}}</strong> of <strong>3</strong></h3>
+
         <section class="td-cards" ng-if="game.cardsVisible">
           <div ng-repeat="card in game.dealer.dealt"
-              on-destroy="cardDestroyed($index)"
               on-swipe-up="game.cardSwipedUp(game.cc)"
               on-double-tap="game.togglePhrases()"
-              on-swipe-left="game.cardSwipedLeft($index)"
-              on-swipe-right="game.cardSwipedRight($index)"
+              on-swipe-left="game.cardSwipedLeft()"
+              on-swipe-right="game.cardSwipedRight()"
               on-partial-swipe="cardPartialSwipe(amt)"
               class="card card-{{$index}} {{ (game.cardFaceVisible === true) ? 'card-face' : 'card-back' }}" >
-              <h1 class="td--phrase {{(game.cardFaceVisible == true && game.showAltPhrase == false) ? 'hidden' : 'show' }}">{{card[game.cc].phrase}}</h1>
-              <h1 class="td--phrase {{(game.cardFaceVisible == true && game.showAltPhrase == false) ? 'show' : 'hidden' }}">{{card[game.cc].alt_phrase}}</h1>
+
+            <div class="{{ (game.cardFaceVisible === true) ? 'show' : 'hidden' }}">
+              <h1 class="td--phrase {{(game.showAltPhrase == false) ? 'show' : 'hidden' }}">{{card[game.cc].phrase}}</h1>
+              <h1 class="td--alt-phrase {{(game.showAltPhrase == false) ? 'hidden' : 'show' }}">{{card[game.cc].alt_phrase}}</h1>
               <!-- <button  ng-click="game.activateCard($index)" class="button button-assertive button-xsmall">Activate</button> -->
+            </div>
           </div>
           <!-- <div class="hidden empty" ng-if="!cards.master.length">
             <button  ng-click="game.lastCard()" class="button button-default button-xsmall ">Last Card</button>
@@ -53,15 +58,18 @@
          <div class="col">
             <div id="dealer" class="show">
                 <h3 class="instruction-test">Push button to deal cards</h3>
-                <button class="deal-cards button button-energized button-large" ng-click="game.deal();deal();">Deal Cards</button>
+                <button class="deal-cards button button-energized button-large" ng-click="game.deal();">Deal Cards</button>
             </div>
             <div id="showCards" class="hidden">
                 <h3 class="instruction-test">Push button to show cards</h3>
                 <button class="button button-energized button-large" ng-click="game.showCards()">Show Cards</button>
             </div>
             <div id="activateCard" class="hidden">
-                <h3 class="instruction-test">Choose one of the three phrases above to act out</h3>
-                <button class="button button-energized button-large button-outline" ng-click="game.activateCard()">Activate Card</button>
+                <h3 class="small">Swipe <strong>Up</strong> to select your card</h3>
+                <h3 class="small">Swipe <strong>Left</strong> or <strong>Right</strong> to view cards.</h3>
+                <h3 class="small"><strong>Double Tap</strong> card to view <br> "G-Rated" phrase</h3>
+
+                <!-- <button class="button button-energized button-large button-outline" ng-click="game.activateCard()">Activate Card</button> -->
             </div>
             <div id="showCountdown" class="hidden">
                 <h3 class="instruction-test">You'll have 120 seconds to act out the phrase. Click button when ready.</h3>

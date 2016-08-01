@@ -164,6 +164,21 @@ h3 {
      text-align: center;
 }
 
+h3.card-count {
+  margin-top: 15px;
+  margin-bottom: 40px;
+}
+
+h3.small {
+    font-family: $brand-font-family-base;
+    font-weight: 300;
+    color: #ffffff;
+    font-size: 18px;
+    line-height:20px;
+    text-align: center;
+}
+
+
 h2.active-team {
     font-family: $brand-font-family-base;
     font-weight: 600;
@@ -267,6 +282,10 @@ h2.active-team {
   color: white!important;
 }
 
+.text--red {
+  color: red!important;
+}
+
 
   p.text--pre-title {
    margin: 45px auto 5px auto;
@@ -333,6 +352,15 @@ h3.instruction-text {
   font-weight: 600;
   font-size: 22px;
   line-height: 22px;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: rgba(255, 255, 255, 0.08) 0 1px 0;
+}
+
+h3.instruction-text--small {
+  font-family: $brand-font-family-base;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
   color: rgba(255, 255, 255, 0.8);
   text-shadow: rgba(255, 255, 255, 0.08) 0 1px 0;
 }
@@ -855,7 +883,7 @@ img.img--center {
 
   #team1__score {
     strong {
-      color: $brand-yellow!important;
+      color: white!important;
     }
   }
 
@@ -918,7 +946,7 @@ img.img--center {
   #team2__score {
     color: black;
     strong {
-      color: $brand-yellow!important;
+      color: black!important;
     }
   }
 
@@ -1399,26 +1427,18 @@ h1.td--alt-phrase {
   text-align: center;
 }
 
-
-.td-button {
-  position: absolute;
-  bottom: 5%;
-  width: 100%;
-  text-align: center;
-}
-
 .td-title span {
   font-weight: bold;
   font-size: 16px;
 }
 
 .card p {
-    font-size: 35px;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 35px;
-    text-align: center;
+  font-size: 35px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 35px;
+  text-align: center;
 }
 
 .yellow-text {
