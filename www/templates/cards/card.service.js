@@ -50,7 +50,7 @@ function CardService($timeout, $http) {
 
       var cardToActivate = this.dealt.slice(1, index);
 
-      if(angular.isDefined(cardToActivate)){
+      if (angular.isDefined(cardToActivate)){
             this.activeCard.push(cardToActivate);
             console.log(this.activeCard);
             return cardToActivate;
@@ -61,34 +61,8 @@ function CardService($timeout, $http) {
 
     };
 
-    // Deck.prototype.deal = function(){
-    //   var card = this.cards.shift();
-    //   this.dealt.push(card);
-    //   console.log(this.card);
-    // };
-
-    // Deck.prototype.clearCards = function(){
-    //   var card = this.cards.shift();
-    //   this.dealt.push(card);
-    //   console.log(this.card);
-    // };
-
-
-    // Deck.prototype.deal = function(){
-
-    //     var cards = this.cards.slice(0, 3);
-
-    //     if(angular.isDefined(cards)){
-    //         this.dealt.push(cards);
-    //         console.log(this.dealt);
-    //         return cards;
-    //     }
-    //     else {
-    //         return false;
-    //     }
-    // };
-
     Deck.prototype.shuffle = function(cards){
+        console.log("shuffle cards meow!");
       this.cards = cards;
       var currentIndex = this.cards.length;
       var temporaryValue, randomIndex;

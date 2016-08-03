@@ -248,8 +248,18 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
           game.cardsDealt = false;
           game.cardFaceVisible = false;
 
+          game.dealer.readyNextHand();
+          var cards = game.deck;
+          console.log("dirty cards: ", cards);
+          //game.deck.shuffle(cards);
+          console.log("shuffled cards y0!: ", cards);
+
          $scope.selectActiveTeam();  //  Also controlling  //  $scope.gameSlideActive = false || true
       };
+
+
+
+
 
       $scope.firstStep = function() {
           game.step = 1;
@@ -477,7 +487,8 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
       game.shuffleCards = function(){
         var cd = game.deck;
         console.log("current deck: ", cd);
-        var nd = CardService.newDeck(cd);
+        // var nd = CardService.newDeck(cd);
+        var nd = game.dealer.deck.shuffle(cd);
         console.log("new deck: ", nd);
       }
 
@@ -563,7 +574,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
           $("#countdown").removeClass("hidden").addClass("show");
           $scope.newCountdown();
           $scope.selectTimer(game.secondsRemaining);
-          // game.readyNextTurn() will go to: game.awardPoint or game.noPoint, both of which call game.readyNextTurn() which restarts loop
+          // game.readyNextTurn() will go to: game.awardPoint or game.noPoint, both of which call game.NeNextTurn() which restarts loop
       };
 
       game.initLoop();
@@ -790,4 +801,3 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
 };  ////     END GAME CONTROLLER     ////
 ///////      END GAME CONTROLLER     ////
-

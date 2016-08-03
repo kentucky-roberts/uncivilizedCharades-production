@@ -35,10 +35,13 @@ function DealerService ($timeout, $q, GameService, CardService, TeamService) {
 
     dealer.deal = function () {
       console.log("dealer.deal() happening now");
-        dealer.init();
-        var cards = dealer.deck.cards.slice(0, 3);
-        console.log(cards);
-        dealer.dealt.push(cards);
+        //dealer.init();
+        dealer.dealt =[];
+        var crds = dealer.deck.cards;
+        dealer.deck.shuffle(crds);
+        var dc = dealer.deck.cards.slice(0, 3);
+        console.log(dc);
+        dealer.dealt.push(dc);
         console.log(dealer.dealt);
         // function pushCards(cards){
         //   dealer.deck.dealt.push(cards);
@@ -59,7 +62,7 @@ function DealerService ($timeout, $q, GameService, CardService, TeamService) {
       // dealer.deck.discards;
       dealer.dealt = [];
       dealer.activeCard = [];
-
+      //console.log(dealer.deck);
     }
 
     dealer.activateCard = function (index) {
@@ -90,7 +93,7 @@ function DealerService ($timeout, $q, GameService, CardService, TeamService) {
       dealer.discards.push(dc);
       //console.log(dealer.discards);
 
-      dealer.dealt = [];  // clear out for next hand
+      //dealer.dealt = [];  // clear out for next hand
       console.log(dealer.dealt);
 
       //dealer.readyNextHand();  // dont do this yet because it kills message used success message
