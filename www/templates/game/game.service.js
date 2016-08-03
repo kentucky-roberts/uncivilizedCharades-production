@@ -13,7 +13,7 @@ function GameService() {
     };
     ////////////////////
     var _maxScore = 3;
-    var _maxTime = 2;
+    var _maxTime = 4;
     /**
      * Returns the numeric maximum hand value before busting
      * @returns {number}

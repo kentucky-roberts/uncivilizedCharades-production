@@ -5,11 +5,11 @@
             <div class="progress-wrapper bg-brand-dark">
 
                 <div ng-if="!started && !paused && !done">
-                    <h2><strong>Card selected!</strong></h2>
+                    <h1 style="margin-top:5%;margin-bottom:3%;"><strong>Card selected!</strong></h1>
                 </div>
 
                 <div ng-if="started && !paused && !done">
-                    <h3><strong>Act out your card's phrase</strong></h3>
+                    <h1 style="margin-top:10%;margin-bottom:3%;">Act out your card's phrase</h1>
                 </div>
 
                 <div ng-if="!started && !paused && !done">
@@ -59,7 +59,7 @@
                   </div>
                   <div class="row">
                     <div class="col">
-                       <p class="lead text--center">
+                       <p class="lead text--center" style="color:white;">
                           <strong>Push</strong> button to
                           <br>
                           <strong>Start </strong> the <strong>Countdown</strong>
@@ -73,7 +73,7 @@
                      <div class="col">
                         <div ng-if="started && !done">
                             <!-- <button class="button button-balanced button-block" ng-click="modal.hide();stopTimer(true);showSuccess();"> -->
-                            <button class="button button-balanced button-outlined button-large button-block" ng-click="modal.hide();stopTimer(true);showSuccess();">
+                            <button class="button button-balanced button-outlined button-large button-block white--text" ng-click="pauseTimer();modal.hide();showSuccess();">
                                 Got it!
                             </button>
                         </div>
