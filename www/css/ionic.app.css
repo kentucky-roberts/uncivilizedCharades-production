@@ -10385,17 +10385,17 @@ a.green.button, .button.button--glow {
 
 @-webkit-keyframes yellowPulse {
   from {
-    background-color: #333;
+    background-color: #000000;
     -webkit-box-shadow: 0 0 4px #fc0;
     color: #ffcc00;
     text-shadow: #ffcc00 0 0px 0; }
   50% {
-    background-color: #333;
+    background-color: #000000;
     -webkit-box-shadow: 0 0 8px #fce21e;
     color: #fce21e;
     text-shadow: #fce21e 0 0 0; }
   to {
-    background-color: #333;
+    background-color: #000000;
     -webkit-box-shadow: 0 0 4px #fc0;
     color: #ffcc00;
     text-shadow: #ffcc00 0 0px 0; } }
@@ -10405,8 +10405,8 @@ a.green.button, .button.button--glow {
   color: #ffffff !important; }
 
 .button.button-energized {
-  border-color: transparent;
-  background-color: #ffc900;
+  border-color: white;
+  background-color: #000000;
   text-shadow: rgba(0, 0, 0, 0.09) 0px 2px 0px;
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
@@ -10447,8 +10447,8 @@ a.green.button, .button.button--glow {
 
 .start__button__container {
   display: block;
-  margin-top: 125px;
-  margin-bottom: 15px;
+  margin-top: 0;
+  margin-bottom: 0;
   margin-right: auto;
   margin-left: auto;
   width: 100%; }
@@ -10466,7 +10466,7 @@ a.green.button, .button.button--glow {
   .start__button__container .start--text {
     vertical-align: middle;
     text-align: center;
-    margin-top: 15px; }
+    margin-top: 0; }
   .start__button__container .start--button {
     margin-right: auto;
     margin-left: auto;
@@ -11296,7 +11296,7 @@ body {
   cursor: url("http://ionicframework.com/img/finger.png"), auto;
   font-family: "Open Sans", sans-serif;
   -webkit-backface-visibility: hidden;
-  background-color: #333;
+  background-color: black;
   color: #c7c7c7;
   word-wrap: break-word;
   -webkit-font-feature-settings: "kern" 1;
@@ -11356,6 +11356,30 @@ h2.body-title {
   -moz-box-shadow: rgba(255, 255, 255, 0.07) 0 1px 0;
   -webkit-box-shadow: rgba(255, 255, 255, 0.07) 0 1px 0;
   box-shadow: rgba(255, 255, 255, 0.07) 0 1px 0; }
+
+.welcome-to {
+  text-transform: uppercase;
+  display: block;
+  margin: 5px auto 0;
+  font-weight: 300;
+  text-align: center; }
+
+h1.uncivilized {
+  margin: 15px auto;
+  font-size: 52px; }
+
+h2.charades {
+  font-family: "Shadows Into Light Two", cursive;
+  color: white;
+  display: block;
+  margin: 25px auto;
+  text-transform: uppercase;
+  font-size: 54px; }
+
+img.hands {
+  display: block;
+  margin: 0 auto 15px;
+  width: 40%; }
 
 .brand-bg {
   background-color: #333 !important; }
@@ -11515,8 +11539,9 @@ h1.text--start {
   text-align: center; }
 
 p.text--start {
-  margin: 5px auto 35px auto;
-  text-align: center; }
+  margin: 15px auto 0;
+  text-align: center;
+  color: white !important; }
 
 .border__solid--white {
   padding-top: 6px;
@@ -12778,5 +12803,36 @@ h1.td-title {
 .the-content {
   /* Same as initial image height: */
   padding-top: 300px; }
+
+.card-1 {
+  left: 50%;
+  margin-left: -13em;
+  z-index: 10;
+  transform: rotateZ(-3deg);
+  -moz-transform: rotateZ(-3deg);
+  -webkit-transform: rotateZ(-3deg);
+  transition: all 0.5s ease-out 0.3s; }
+
+.card-2 {
+  left: 50%;
+  margin-left: -12em;
+  z-index: 9;
+  transition: all 0.5s ease-out 0.15s; }
+
+.card-3 {
+  left: 50%;
+  margin-left: -11em;
+  z-index: 8;
+  transform: rotateZ(3deg);
+  -webkit-transform: rotateZ(3deg);
+  -moz-transform: rotateZ(3deg);
+  transition: all 0.5s ease-out; }
+
+.start .card {
+  left: -100%;
+  opacity: 0;
+  transform: rotateZ(0deg);
+  -webkit-transform: rotateZ(0deg);
+  -moz-transform: rotateZ(0deg); }
 
 /*# sourceMappingURL=ionic.app.css.map */

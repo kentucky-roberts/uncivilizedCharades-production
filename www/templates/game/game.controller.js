@@ -3,12 +3,12 @@ angular
     .controller('GameController', GameController);
 
 GameController.$inject = ['$ionicPlatform', '$q', '$scope', '$rootScope', '$firebaseAuth', '$window', '$interval', '$timeout', '$ionicModal', '$ionicLoading', '$ionicSideMenuDelegate', '$state', '$ionicSlideBoxDelegate', '$http', '$ionicTabsDelegate', '$firebaseObject', 'ngAudio', 'ionicToast', '$ionicNavBarDelegate', 'PlayerService', 'CardService', 'ModalService', 'CountdownService', 'DealerService', 'TeamService', 'AppService', 'GameService', 'Games', '$log', 'CardType', 'dataservice', 'TeamService', 'TeamsService'];
-
 function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $window, $interval, $timeout, $ionicModal, $ionicLoading, $ionicSideMenuDelegate, $state, $ionicSlideBoxDelegate, $http, $ionicTabsDelegate, $firebaseObject, ngAudio, ionicToast, $ionicNavBarDelegate, PlayerService, CardService, ModalService, CountdownService, DealerService, TeamService, AppService, GameService, Games, $log, CardType, dataservice, TeamService, TeamsService) {
 
   $scope.hideNavBar = function() {
       document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
   };
+
   $scope.hideTabBar = function() {
       document.getElementsByClassName('tabs')[0].style.display = 'none';
   };
@@ -56,8 +56,6 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
         return element.name.match(/^Ma/) ? true : false;
     };
 
-
-
     game.card_types = [];
     game.phrases = [];
     game.alt_phrases = [];
@@ -67,7 +65,6 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
     function activate() {
         return getCards().then(function() {
           console.log("... returning cards", game.card_types);
-          //console.log(game.phrases);
           var cards = game.card_types;
           game.init(cards);
         });
@@ -75,25 +72,23 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
     function getCards() {
         return dataservice.getCards()
-            .then(function(data) {
-                game.card_types = data;
-                console.log(game.card_types);
+          .then(function(data) {
+              game.card_types = data;
+              console.log(game.card_types);
 
-                // game.card_types.forEach(function (phrase) {
-                //   game.phrases.push(phrase);
-                //   console.log("pushing phrase: " + phrase);
-                // });
+              // game.card_types.forEach(function (phrase) {
+              //   game.phrases.push(phrase);
+              //   console.log("pushing phrase: " + phrase);
+              // });
 
-                //   game.card_types.forEach(function (alt_phrase) {
-                //       game.alt_phrases.push(alt_phrase);
-                //       console.log("pushing alt_phrase: " + alt_phrase);
-                //   });
+              //   game.card_types.forEach(function (alt_phrase) {
+              //       game.alt_phrases.push(alt_phrase);
+              //       console.log("pushing alt_phrase: " + alt_phrase);
+              //   });
 
-                //console.log(game.phrases);
+              //console.log(game.phrases);
 
-            });
-
-
+          });
     }
 
 
@@ -109,13 +104,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
       game.deck = CardService.newDeck(cards);  // create a deck of cards and pass it into the game
       //console.log(game.deck);
       //console.log(game.deck.cards);
-
-
-
-
-
-
-
+      //
       //
       //
       /**
@@ -131,10 +120,8 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
        * game.deck.reset();
        *
        */
-
         game.dealer = DealerService.newDealer(game.deck);  //  now create a dealer pass him to game and give the dealer out new game deck of cards
         //console.log(game.dealer.deck.cards[0]);
-
         game.team1 = TeamService.newTeam("Team1", 0);  // make a team
         game.team2 = TeamService.newTeam("Team2", 0);  // make another team
         game.teams = TeamsService.newTeams(game.team1, game.team2);  //  push teams into game to make game.teams
@@ -156,9 +143,6 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
          * game.teams.team1.changeScore(anountToChange);
          *
          */
-        //console.log("... created game.teams" + game.teams.team1.teamName + game.teams.team2.teamName);
-
-
         $scope.slides = [];
 
         game.canDeal = false;
@@ -435,6 +419,36 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
       };
 
+      game.startSplash = function() {
+
+        $timeout(function() {
+            $(".welcome-to").removeClass("hidden").addClass("slideInUp");
+        }, 2000);
+
+         $timeout(function() {
+            $(".uncivilized").removeClass("hidden").addClass("slideInLeft");
+        }, 3000);
+
+         $timeout(function() {
+            $(".charades").removeClass("hidden").addClass("slideInRight");
+        }, 4000);
+
+        $timeout(function() {
+            $(".hands").removeClass("hidden").addClass("bounceIn");
+        }, 5000);
+
+        $timeout(function() {
+          $(".start__button__container").removeClass("hidden").addClass("bounceIn");
+        }, 6000);
+
+        $timeout(function() {
+          //$(".welcome-to").addClass("slideOutUp");
+          //$(".start-text").removeClass("hidden").addClass("slideInUp");
+        }, 7000);
+
+      };
+      game.startSplash();
+
       game.initLoop = function() {
           game.cardFaceVisible = false;
           game.showAltPhrase = false;
@@ -560,12 +574,28 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
       game.cardSwipedRight = function(){
         //console.log("swipe right!");
+        //game.animateSwipeRight();
         game.lastCard();
       }
 
       game.cardSwipedLeft = function(){
-       // console.log("swipe left!!!!");
-         game.nextCard();
+        // console.log("swipe left!!!!");
+        //game.animateSwipeLeft();
+        game.nextCard();
+      }
+
+      game.animateSwipeRight = function(){
+        var cardNumber = game.cc;
+        $(".card-"+game.cc).addClass("animated slideOutRight");
+        game.nc = game.cc + 1;
+        $(".card-"+game.nc).addClass("animated slideInLeft");
+      }
+
+      game.animateSwipeLeft = function(){
+        var cardNumber = game.cc;
+        $(".card-"+game.cc).addClass("animated slideOutLeft");
+        game.nc = game.cc + 1;
+        $(".card-"+game.nc).addClass("animated slideInRight");
       }
 
       game.showCountdown = function() {

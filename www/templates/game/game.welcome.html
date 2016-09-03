@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container hidden">
+
   <div class="fixed__outside--top">
     <p class="text--pre-title">WELCOME TO</p>
     <h1 class="text--start">Uncivilized Charades</h1>
@@ -6,17 +7,41 @@
 
   <div class="fixed__outside--center">
     <div class="start__button__container center--block">
-      <button class="start--button button--glow  button button-energized button-fab button-outline icon ion-power" ng-click="startQuickStart(team);"></button>
+      <button class="start--button button--glow button button-energized button-fab button-outline icon ion-power" ng-click="startQuickStart(team);"></button>
     </div>
     <p class="lead text--red text--center text--start pull-left">Push Button to Start a <br>New Game</p>
   </div><!--/.fixed__outside--center-->
 
   <div class="fixed__outside--bottom">
     <p clas="text--center">
-      Or <a href="#">Click Here</a> for a <a href="#">Quickie</a>
+      Or <a href="#">Click Here</a> for a <a href="#">Quickie</a><!-- TODO... make this a modal in GameController -->
     </p>
   </div>
+
 </div><!--/.container-->
+
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+
+      <p id="one" class="hidden animated welcome-to">Welcome To</p>
+
+      <h1 id="two" class="hidden animated uncivilized">Uncivilized</h1>
+
+      <h2 id="three" class="hidden animated charades">Charades</h2>
+
+      <img id="four" class="hidden animated hidden hands" src="img/intro/hands.png">
+
+      <div id="five" class="hidden animated start__button__container center--block">
+        <button class="start--button button--glow button button-energized button-fab button-outline icon ion-power" ng-click="startQuickStart(team);"></button>
+        <p class="start-text lead text--center text--start pull-left">Push Button to Start a <br>New Game</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
 <div class="hidden">
   <div class="row">

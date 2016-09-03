@@ -22,6 +22,7 @@
         <h1>{{game.activeTeam.teamName || 'Active Team Name'}}</h1>
       </div>
 
+
       <!-- place cards between these lines -->
       <div class="{{(game.canDeal === true || game.cardsDealt === true ) ? 'show' : 'hidden'}} ">
 
@@ -34,7 +35,8 @@
               on-swipe-left="game.cardSwipedLeft()"
               on-swipe-right="game.cardSwipedRight()"
               on-partial-swipe="cardPartialSwipe(amt)"
-              class="card card-{{$index}} {{ (game.cardFaceVisible === true) ? 'card-face' : 'card-back' }}" >
+              class="card card-{{$index}} my-switch-animation
+              {{ (game.cardFaceVisible === true) ? 'card-face' : 'card-back' }}" >
 
             <div class="{{ (game.cardFaceVisible === true) ? 'show' : 'hidden' }}">
               <h1 class="td--phrase {{(game.showAltPhrase == false) ? 'show' : 'hidden' }}">{{card[game.cc].phrase}}</h1>

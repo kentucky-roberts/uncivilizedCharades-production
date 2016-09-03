@@ -17,9 +17,9 @@ a.green.button, .button.button--glow {
 }
 
 @-webkit-keyframes yellowPulse {
-  from { background-color: $brand-bg; -webkit-box-shadow: 0 0 4px $brand-yellow; color: rgba(255, 204, 0, 1); text-shadow: rgba(255, 204, 0, 1) 0 0px 0;}
-  50% { background-color: $brand-bg; -webkit-box-shadow: 0 0 8px $brand-yellow-bright;  color: rgba(252, 226, 30, 1); text-shadow: rgba(252, 226, 30, 1) 0 0 0;}
-  to { background-color: $brand-bg; -webkit-box-shadow: 0 0 4px $brand-yellow; color: rgba(255, 204, 0, 1); text-shadow: rgba(255, 204, 0, 1) 0 0px 0;}
+  from { background-color: #000000; -webkit-box-shadow: 0 0 4px $brand-yellow; color: rgba(255, 204, 0, 1); text-shadow: rgba(255, 204, 0, 1) 0 0px 0;}
+  50% { background-color: #000000; -webkit-box-shadow: 0 0 8px $brand-yellow-bright;  color: rgba(252, 226, 30, 1); text-shadow: rgba(252, 226, 30, 1) 0 0 0;}
+  to { background-color: #000000; -webkit-box-shadow: 0 0 4px $brand-yellow; color: rgba(255, 204, 0, 1); text-shadow: rgba(255, 204, 0, 1) 0 0px 0;}
 }
 
 .button.button-light.button-outline {
@@ -29,8 +29,8 @@ color: #ffffff!important;
 }
 
 .button.button-energized {
-  border-color: transparent;
-  background-color: #ffc900;
+  border-color: white;
+  background-color: #000000;
   text-shadow: rgba(0, 0, 0, 0.09) 0px 2px 0px;
   font-family: $brand-font-family-base;
   font-weight: 600;
@@ -80,8 +80,8 @@ color: #ffffff!important;
 
 .start__button__container {
   display: block;
-  margin-top: 125px;
-  margin-bottom: 15px;
+  margin-top: 0;
+  margin-bottom: 0;
   margin-right: auto;
   margin-left: auto;
   width:100%;
@@ -102,7 +102,7 @@ color: #ffffff!important;
   .start--text {
     vertical-align: middle;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 0;
   }
 
   .start--button {
