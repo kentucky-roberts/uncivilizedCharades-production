@@ -11360,36 +11360,39 @@ h2.body-title {
 .text-upper {
   text-transform: uppercase !important; }
 
-.welcome-to {
+/* Splash Screen */
+.splash-screen .welcome-to {
   text-transform: uppercase;
   display: block;
   margin: 50px auto 0;
   font-weight: 300;
   text-align: center; }
-
-h1.uncivilized {
+.splash-screen h1.uncivilized {
   margin: 15px auto 0;
   font-size: 52px; }
-
-h2.charades {
+.splash-screen h2.charades {
   font-family: "Shadows Into Light Two", cursive;
   color: white;
   display: block;
   margin: 15px auto;
   text-transform: uppercase;
   font-size: 54px; }
-
-img.hands {
+.splash-screen img.hands {
   display: block;
   margin: 0 auto 15px;
   width: 40%; }
-
-button.button-start {
+.splash-screen button.button-start {
   display: block;
   margin: 50px auto 0;
   text-transform: uppercase;
   border: 2px solid white; }
+.splash-screen p.copywrite {
+  font-weight: 300;
+  color: white;
+  text-align: center;
+  font-size: 14px; }
 
+/* ./splash-screen */
 .brand-bg {
   background-color: #333 !important; }
 
@@ -11987,6 +11990,18 @@ img.img--center {
     margin-bottom: 0; }
   .bg-team1 p {
     color: #ffffff !important; }
+  .bg-team1 button {
+    background-color: #121212 !important;
+    border: 2px solid white !important;
+    color: white !important; }
+    .bg-team1 button:hover {
+      background-color: white !important;
+      border: 2px solid white !important;
+      color: black !important; }
+    .bg-team1 button:active {
+      background-color: white !important;
+      border: 2px solid white !important;
+      color: black !important; }
 
 /*
 *
@@ -12022,11 +12037,24 @@ img.img--center {
     margin-top: 0;
     margin-bottom: 0; }
   .bg-team2 h3 {
-    color: #121212 !important; }
+    color: #121212 !important;
+    font-weight: 600; }
   .bg-team2 p {
     color: #121212 !important; }
   .bg-team2 span {
     color: #121212 !important; }
+  .bg-team2 button {
+    background-color: transparent !important;
+    border: 2px solid #121212 !important;
+    color: #121212 !important; }
+    .bg-team2 button:hover {
+      background-color: #121212 !important;
+      border: 2px solid #121212 !important;
+      color: white !important; }
+    .bg-team2 button:active {
+      background-color: #121212 !important;
+      border: 2px solid #121212 !important;
+      color: white !important; }
 
 /*
 *

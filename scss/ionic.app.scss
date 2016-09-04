@@ -98,40 +98,53 @@ h2.body-title {
   text-transform: uppercase!important;
 }
 
-.welcome-to {
-  text-transform: uppercase;
-  display: block;
-  margin: 50px auto 0;
-  font-weight: 300;
-  text-align: center;
-}
+/* Splash Screen */
+.splash-screen {
 
-h1.uncivilized {
-  margin: 15px auto 0;
-  font-size: 52px;
-}
+  .welcome-to {
+    text-transform: uppercase;
+    display: block;
+    margin: 50px auto 0;
+    font-weight: 300;
+    text-align: center;
+  }
 
-h2.charades {
-  font-family: $brand-font-family-hand-writing;
-  color: white;
-  display: block;
-  margin: 15px auto;
-  text-transform: uppercase;
-  font-size: 54px;
-}
+  h1.uncivilized {
+    margin: 15px auto 0;
+    font-size: 52px;
+  }
 
-img.hands {
-  display: block;
-  margin: 0 auto 15px;
-  width: 40%;
-}
+  h2.charades {
+    font-family: $brand-font-family-hand-writing;
+    color: white;
+    display: block;
+    margin: 15px auto;
+    text-transform: uppercase;
+    font-size: 54px;
+  }
 
-button.button-start {
-  display: block;
-  margin: 50px auto 0;
-  text-transform: uppercase;
-  border: 2px solid white;
-}
+  img.hands {
+    display: block;
+    margin: 0 auto 15px;
+    width: 40%;
+  }
+
+  button.button-start {
+    display: block;
+    margin: 50px auto 0;
+    text-transform: uppercase;
+    border: 2px solid white;
+  }
+
+  p.copywrite {
+    font-weight: 300;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+  }
+} /* ./splash-screen */
+
+
 
 .brand-bg {
   background-color:  $brand-bg!important;
@@ -948,11 +961,26 @@ img.img--center {
   }
 
   p {
-      color: $brand-color-light!important;
+    color: $brand-color-light!important;
+  }
+
+  button {
+    background-color: $brand-color-dark!important;
+    border: 2px solid white!important;
+    color: white!important;
+
+    &:hover {
+      background-color: white!important;
+      border: 2px solid white!important;
+      color: black!important;
+    }
+    &:active {
+      background-color: white!important;
+      border: 2px solid white!important;
+      color: black!important;
+    }
   }
 }
-
-
 
 /*
 *
@@ -992,8 +1020,8 @@ img.img--center {
 
   h1 {
     color: $brand-color-dark!important;
-     margin-top: 0;
-      margin-bottom:0;
+    margin-top: 0;
+    margin-bottom:0;
   }
 
   h2 {
@@ -1006,6 +1034,7 @@ img.img--center {
 
   h3 {
     color: $brand-color-dark!important;
+    font-weight: 600;
   }
 
   p {
@@ -1014,6 +1043,23 @@ img.img--center {
 
   span {
     color: $brand-color-dark!important;
+  }
+
+  button {
+    background-color: transparent!important;
+    border: 2px solid $brand-color-dark!important;
+    color: $brand-color-dark!important;
+
+    &:hover {
+      background-color: $brand-color-dark!important;
+      border: 2px solid $brand-color-dark!important;
+      color: white!important;
+    }
+    &:active {
+      background-color: $brand-color-dark!important;
+      border: 2px solid $brand-color-dark!important;
+      color: white!important;
+    }
   }
 
 }

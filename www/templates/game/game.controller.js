@@ -434,17 +434,17 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
         }, 4000);
 
         $timeout(function() {
-            $(".hands").removeClass("hidden").addClass("bounceIn");
+            $(".hands").removeClass("hidden").addClass("zoomIn");
             //$(".card").removeClass("hidden").addClass("bounceIn");
         }, 5000);
 
         $timeout(function() {
           $(".start__button__container").removeClass("hidden").addClass("slideInUp");
+          $(".button-start").addClass("pulse");
         }, 6000);
 
         // $timeout(function() {
-        //   //$(".welcome-to").addClass("slideOutUp");
-        //   //$(".start-text").removeClass("hidden").addClass("slideInUp");
+        //   $(".copywrite").removeClass("hidden").addClass("slideInUp");
         // }, 7000);
 
       };
