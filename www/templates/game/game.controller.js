@@ -422,7 +422,7 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
       game.startSplash = function() {
 
         $timeout(function() {
-            $(".welcome-to").removeClass("hidden").addClass("slideInUp");
+            $(".welcome-to").removeClass("hidden").addClass("slideInDown");
         }, 2000);
 
          $timeout(function() {
@@ -435,16 +435,17 @@ function GameController($ionicPlatform, $q, $scope, $rootScope, $firebaseAuth, $
 
         $timeout(function() {
             $(".hands").removeClass("hidden").addClass("bounceIn");
+            //$(".card").removeClass("hidden").addClass("bounceIn");
         }, 5000);
 
         $timeout(function() {
-          $(".start__button__container").removeClass("hidden").addClass("bounceIn");
+          $(".start__button__container").removeClass("hidden").addClass("slideInUp");
         }, 6000);
 
-        $timeout(function() {
-          //$(".welcome-to").addClass("slideOutUp");
-          //$(".start-text").removeClass("hidden").addClass("slideInUp");
-        }, 7000);
+        // $timeout(function() {
+        //   //$(".welcome-to").addClass("slideOutUp");
+        //   //$(".start-text").removeClass("hidden").addClass("slideInUp");
+        // }, 7000);
 
       };
       game.startSplash();
