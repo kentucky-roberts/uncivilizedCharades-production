@@ -40,12 +40,21 @@ color: #ffffff!important;
   text-align: center;
 }
 
+.progress {
+  display: block;
+  margin-bottom: 25px;
+  margin-right: auto;
+  margin-left: auto;
+  width:100%;
+  padding: 25%;
+}
 .start__countdown__container {
   display: block;
   margin-bottom: 25px;
   margin-right: auto;
   margin-left: auto;
   width:100%;
+  padding: 25%;
 
   .button .icon:before,
   .button.icon:before,
@@ -159,6 +168,12 @@ color: #ffffff!important;
 }
 
 
+.button-got-it {
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 18px;
+  color: white;
+}
 
 
 /* Button : FAB
